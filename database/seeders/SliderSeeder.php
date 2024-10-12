@@ -19,6 +19,7 @@ class SliderSeeder extends Seeder
             "name" => "Slider1",
             "content" => "E-ticaret sitemize hoşgeldiniz",
             "link" => "products",
+            "status" => "1",
         ]);
     }
 }
