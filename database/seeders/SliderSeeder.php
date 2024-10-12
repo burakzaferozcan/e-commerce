@@ -15,7 +15,7 @@ class SliderSeeder extends Seeder
     {
         //
         Slider::create([
-            "image" => "https://fakeimg.pl/250x100/",
+            "image" => "https://fakeimg.pl/1900x890/",
             "name" => "Slider1",
             "content" => "E-ticaret sitemize hoşgeldiniz",
             "link" => "products",
