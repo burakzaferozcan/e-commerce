@@ -43,9 +43,23 @@
                 <li class="has-children active">
                     <a href="{{ route('home') }}">Kategoriler</a>
                     <ul class="dropdown">
-                        @if (!empty($categories) && $categories->count() > 0)
+                        {{-- @if (!empty($categories) && $categories->count() > 0)
                             @foreach ($categories as $category)
                                 <li><a href="#">{{ $category->name }}</a></li>
+                            @endforeach
+                        @endif --}}
+                        @if (!empty($categories) && $categories->count() > 0)
+                            @foreach ($categories->where('cat_ust', null) as $category)
+                                <li class="has-children">
+                                    <a href="#">{{ $category->name }}</a>
+                                    <ul class="dropdown">
+                                        @foreach ($categories as $subCategory)
+                                            @if ($subCategory->cat_ust == $category->id)
+                                                <li><a href="#">{{ $subCategory->name }}</a></li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </li>
                             @endforeach
                         @endif
                         {{-- <li><a href="#">{Menu One}</a></li>
