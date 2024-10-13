@@ -43,17 +43,22 @@
                 <li class="has-children active">
                     <a href="{{ route('home') }}">Kategoriler</a>
                     <ul class="dropdown">
-                        <li><a href="#">Menu One</a></li>
-                        <li><a href="#">Menu Two</a></li>
-                        <li><a href="#">Menu Three</a></li>
-                        <li class="has-children">
-                            <a href="#">Sub Menu</a>
-                            <ul class="dropdown">
-                                <li><a href="#">Menu One</a></li>
-                                <li><a href="#">Menu Two</a></li>
-                                <li><a href="#">Menu Three</a></li>
-                            </ul>
-                        </li>
+                        @if (!empty($categories) && $categories->count() > 0)
+                            @foreach ($categories as $category)
+                                <li><a href="#">{{ $category->name }}</a></li>
+                            @endforeach
+                        @endif
+                        {{-- <li><a href="#">{Menu One}</a></li>
+                            <li><a href="#">Menu Two</a></li>
+                            <li><a href="#">Menu Three</a></li>
+                            <li class="has-children">
+                                <a href="#">Sub Menu</a>
+                                <ul class="dropdown">
+                                    <li><a href="#">Menu One</a></li>
+                                    <li><a href="#">Menu Two</a></li>
+                                    <li><a href="#">Menu Three</a></li>
+                                </ul>
+                            </li> --}}
                     </ul>
                 </li>
                 <li>

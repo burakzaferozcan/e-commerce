@@ -22,7 +22,7 @@ class CategorySeeder extends Seeder
             "cat_ust" => null,
         ]);
         Category::create([
-            "name" => "Erkek",
+            "name" => "Erkek Kazak",
             "content" => "Erkek Kazakları",
             "status" => "1",
             "image" => null,
@@ -30,7 +30,7 @@ class CategorySeeder extends Seeder
             "cat_ust" => $men->id,
         ]);
         Category::create([
-            "name" => "Erkek",
+            "name" => "Erkek Ayakkabı",
             "content" => "Erkek Ayakkabıları",
             "status" => "1",
             "image" => null,
@@ -46,7 +46,7 @@ class CategorySeeder extends Seeder
             "cat_ust" => null,
         ]);
         Category::create([
-            "name" => "Kadın",
+            "name" => "Kadın Çanta",
             "content" => "Kadın Çantaları",
             "status" => "1",
             "image" => null,
@@ -54,8 +54,8 @@ class CategorySeeder extends Seeder
             "cat_ust" => $women->id,
         ]);
         Category::create([
-            "name" => "Kadın",
-            "content" => "Kadın T-shirtleri",
+            "name" => "Kadın T-Shirt",
+            "content" => "Kadın T-Shirtleri",
             "status" => "1",
             "image" => null,
             "thumbnail" => null,
@@ -70,7 +70,7 @@ class CategorySeeder extends Seeder
             "cat_ust" => null,
         ]);
         Category::create([
-            "name" => "Çocuk",
+            "name" => "Çocuk Pantolon",
             "content" => "Çocuk Pantolonları",
             "status" => "1",
             "image" => null,
@@ -78,7 +78,7 @@ class CategorySeeder extends Seeder
             "cat_ust" => $child->id,
         ]);
         Category::create([
-            "name" => "Çocuk",
+            "name" => "Çocuk Polar",
             "content" => "Çocuk Polarları",
             "status" => "1",
             "image" => null,
