@@ -16,7 +16,7 @@ class SiteSettingMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $settings = SiteSetting::get();
+        $settings = SiteSetting::pluck("data", "name")->toArray();
         view()->share("settings", $settings);
         return $next($request);
     }
