@@ -17,7 +17,11 @@
                     <h2 class="h3 mb-3 text-black">Get In Touch</h2>
                 </div>
                 <div class="col-md-7">
-
+                    @if (session()->has('success'))
+                        <div class="alert alert-success text-center">{{ session()->get('success') }}</div>
+                    @elseif (session()->has('error'))
+                        <div class="alert alert-danger text-center">Mesajınız gönderilirken bir sorun oluştu</div>
+                    @endif
                     <form action="{{ route('contact.save') }}" method="post">
                         @csrf
                         <div class="p-3 p-lg-5 border">
