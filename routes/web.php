@@ -8,6 +8,7 @@ Route::group(["middleware" => "sitesetting"], function () {
     Route::get('/', [PageHomeController::class, 'index'])->name("home");
     Route::get('/about', [PageController::class, 'about'])->name("about");
     Route::get('/contact', [PageController::class, 'contact'])->name("contact");
+    Route::post('/contact/save', [PageController::class, 'contact_save'])->name("contact.save");
     Route::get('/products', [PageController::class, 'products'])->name("products");
     Route::get('/mens_products', [PageController::class, 'products'])->name("mens_products");
     Route::get('/womens_products', [PageController::class, 'products'])->name("womens_products");
