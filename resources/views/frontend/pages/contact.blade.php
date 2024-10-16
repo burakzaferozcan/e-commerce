@@ -19,8 +19,11 @@
                 <div class="col-md-7">
                     @if (session()->has('success'))
                         <div class="alert alert-success text-center">{{ session()->get('success') }}</div>
-                    @elseif (session()->has('error'))
-                        <div class="alert alert-danger text-center">Mesajınız gönderilirken bir sorun oluştu</div>
+                    @endif
+                    @if ($errors->any())
+                        @foreach ($errors->all() as $err)
+                            <div class="alert alert-danger text-center">{{ $err }}</div>
+                        @endforeach
                     @endif
                     <form action="{{ route('contact.save') }}" method="post">
                         @csrf
