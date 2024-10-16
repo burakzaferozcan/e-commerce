@@ -4,8 +4,8 @@
     <div class="bg-light py-3">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong
-                        class="text-black">Contact</strong></div>
+                <div class="col-md-12 mb-0"><a href="{{ route('home') }}">Anasayfa</a> <span class="mx-2 mb-0">/</span> <strong
+                        class="text-black">İletişim</strong></div>
             </div>
         </div>
     </div>
@@ -58,7 +58,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-12">
-                                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Send Message">
+                                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Gönder">
                                 </div>
                             </div>
                         </div>
@@ -66,18 +66,9 @@
                 </div>
                 <div class="col-md-5 ml-auto">
                     <div class="p-4 border mb-3">
-                        <span class="d-block text-primary h6 text-uppercase">New York</span>
-                        <p class="mb-0">203 Fake St. Mountain View, San Francisco, California, USA</p>
+                        <span class="d-block text-primary h6 text-uppercase">Adres</span>
+                        <p class="mb-0">{{ $settings['Adres'] }}</p>
                     </div>
-                    <div class="p-4 border mb-3">
-                        <span class="d-block text-primary h6 text-uppercase">London</span>
-                        <p class="mb-0">203 Fake St. Mountain View, San Francisco, California, USA</p>
-                    </div>
-                    <div class="p-4 border mb-3">
-                        <span class="d-block text-primary h6 text-uppercase">Canada</span>
-                        <p class="mb-0">203 Fake St. Mountain View, San Francisco, California, USA</p>
-                    </div>
-
                 </div>
             </div>
         </div>
