@@ -51,165 +51,28 @@
                     </div>
                     <div class="row mb-5">
 
-                        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                            <div class="block-4 text-center border">
-                                <figure class="block-4-image">
-                                    <a href="shop-single.html"><img src="images/cloth_1.jpg" alt="Image placeholder"
-                                            class="img-fluid"></a>
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="shop-single.html">Tank Top</a></h3>
-                                    <p class="mb-0">Finding perfect t-shirt</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
+                        @if (!empty($products) && $products->count() > 0)
+                            @foreach ($products as $product)
+                                <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+                                    <div class="block-4 text-center border">
+                                        <figure class="block-4-image">
+                                            <a href="shop-single.html"><img src="{{ asset($product->image) }}"
+                                                    alt="Image placeholder" class="img-fluid"></a>
+                                        </figure>
+                                        <div class="block-4-text p-4">
+                                            <h3><a href="shop-single.html">{{ $product->name }}</a></h3>
+                                            <p class="mb-0">{{ $product->short_text }}</p>
+                                            <p class="text-primary font-weight-bold">{{ number_format($product->price, 0) }}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                            <div class="block-4 text-center border">
-                                <figure class="block-4-image">
-                                    <a href="shop-single.html"><img src="images/shoe_1.jpg" alt="Image placeholder"
-                                            class="img-fluid"></a>
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="shop-single.html">Corater</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                            <div class="block-4 text-center border">
-                                <figure class="block-4-image">
-                                    <a href="shop-single.html"><img src="images/cloth_2.jpg" alt="Image placeholder"
-                                            class="img-fluid"></a>
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="shop-single.html">Polo Shirt</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
+                            @endforeach
+                        @endif
 
-                        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                            <div class="block-4 text-center border">
-                                <figure class="block-4-image">
-                                    <a href="shop-single.html"><img src="images/cloth_3.jpg" alt="Image placeholder"
-                                            class="img-fluid"></a>
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="shop-single.html">T-Shirt Mockup</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                            <div class="block-4 text-center border">
-                                <figure class="block-4-image">
-                                    <a href="shop-single.html"><img src="images/shoe_1.jpg" alt="Image placeholder"
-                                            class="img-fluid"></a>
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="shop-single.html">Corater</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                            <div class="block-4 text-center border">
-                                <figure class="block-4-image">
-                                    <a href="shop-single.html"><img src="images/cloth_1.jpg" alt="Image placeholder"
-                                            class="img-fluid"></a>
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="shop-single.html">Tank Top</a></h3>
-                                    <p class="mb-0">Finding perfect t-shirt</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                            <div class="block-4 text-center border">
-                                <figure class="block-4-image">
-                                    <a href="shop-single.html"><img src="images/shoe_1.jpg" alt="Image placeholder"
-                                            class="img-fluid"></a>
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="shop-single.html">Corater</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                            <div class="block-4 text-center border">
-                                <figure class="block-4-image">
-                                    <a href="shop-single.html"><img src="images/cloth_2.jpg" alt="Image placeholder"
-                                            class="img-fluid"></a>
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="shop-single.html">Polo Shirt</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                            <div class="block-4 text-center border">
-                                <figure class="block-4-image">
-                                    <a href="shop-single.html"><img src="images/cloth_3.jpg" alt="Image placeholder"
-                                            class="img-fluid"></a>
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="shop-single.html">T-Shirt Mockup</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                            <div class="block-4 text-center border">
-                                <figure class="block-4-image">
-                                    <a href="shop-single.html"><img src="images/shoe_1.jpg" alt="Image placeholder"
-                                            class="img-fluid"></a>
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="shop-single.html">Corater</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                            <div class="block-4 text-center border">
-                                <figure class="block-4-image">
-                                    <a href="shop-single.html"><img src="images/cloth_1.jpg" alt="Image placeholder"
-                                            class="img-fluid"></a>
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="shop-single.html">Tank Top</a></h3>
-                                    <p class="mb-0">Finding perfect t-shirt</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                            <div class="block-4 text-center border">
-                                <figure class="block-4-image">
-                                    <a href="shop-single.html"><img src="images/cloth_2.jpg" alt="Image placeholder"
-                                            class="img-fluid"></a>
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="shop-single.html">Polo Shirt</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
+
 
 
                     </div>
@@ -247,8 +110,8 @@
                         <div class="mb-4">
                             <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
                             <div id="slider-range" class="border-primary"></div>
-                            <input type="text" name="text" id="amount"
-                                class="form-control border-0 pl-0 bg-white" disabled="" />
+                            <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white"
+                                disabled="" />
                         </div>
 
                         <div class="mb-4">
