@@ -20,7 +20,7 @@ class PageController extends Controller
     }
     public function products()
     {
-        $products = Product::where("status", "1")->get();
+        $products = Product::where("status", "1")->paginate(20);
         return view("frontend.pages.products", compact(("products")));
     }
     public function sale_products()
