@@ -81,7 +81,7 @@
                     </div>
                     <div class="row" data-aos="fade-up">
                         <div class="col-md-12 text-center">
-                            {{ $products->links('pagination::bootstrap-4') }}
+                            {{ $products->withQueryString()->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
                 </div>

@@ -18,9 +18,26 @@ class PageController extends Controller
     {
         return view("frontend.pages.contact");
     }
-    public function products()
+    public function products(Request $request)
     {
-        $products = Product::where("status", "1")->paginate(20);
+        $size = $request->size ?? null;
+        $color = $request->color ?? null;
+        $startPrice = $request->start_price ?? null;
+        $endPrice = $request->end_price ?? null;
+
+
+
+        $products = Product::where("status", "1")->where(function ($q) use ($size, $color, $startPrice, $endPrice) {
+            if (!empty($size)) {
+                $q->where("size", $size);
+            }if (!empty($color)) {
+                $q->where("color", $color);
+            }if (!empty($startPrice) && !empty($endPrice)) {
+                $q->whereBetween("price", [$startPrice, $endPrice]);
+            }
+            return $q;
+
+        })->paginate(1);
         return view("frontend.pages.products", compact(("products")));
     }
     public function sale_products()
