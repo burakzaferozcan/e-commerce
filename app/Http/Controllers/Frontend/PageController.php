@@ -46,6 +46,7 @@ class PageController extends Controller
         $minprice = $products->min("price");
         $maxprice = $products->max("price");
         $sizeList = Product::where("status", "1")->groupBy("size")->pluck("size")->toArray();
+        $colors = Product::where("status", "1")->groupBy("color")->pluck("color")->toArray();
 
 
 
@@ -55,7 +56,7 @@ class PageController extends Controller
             ->where("cat_ust", null)
             ->withCount("items")
             ->get();
-        return view("frontend.pages.products", compact((["products", "categories", "minprice", "maxprice", "sizeList"])));
+        return view("frontend.pages.products", compact((["products", "categories", "minprice", "maxprice", "sizeList", "colors"])));
     }
     public function sale_products()
     {
