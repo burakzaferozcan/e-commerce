@@ -28,17 +28,21 @@ class PageController extends Controller
 
 
 
-        $products = Product::where("status", "1")->where(function ($q) use ($size, $color, $startPrice, $endPrice) {
-            if (!empty($size)) {
-                $q->where("size", $size);
-            }if (!empty($color)) {
-                $q->where("color", $color);
-            }if (!empty($startPrice) && !empty($endPrice)) {
-                $q->whereBetween("price", [$startPrice, $endPrice]);
-            }
-            return $q;
+        $products = Product::where("status", "1")
+            ->select(["id", "name", "slug", "size", "color", "price", "category_id", "image"])
+            ->where(function ($q) use ($size, $color, $startPrice, $endPrice) {
+                if (!empty($size)) {
+                    $q->where("size", $size);
+                }if (!empty($color)) {
+                    $q->where("color", $color);
+                }if (!empty($startPrice) && !empty($endPrice)) {
+                    $q->whereBetween("price", [$startPrice, $endPrice]);
+                }
+                return $q;
 
-        })->paginate(1);
+            })
+            ->with("category:id,name,slug")
+            ->paginate(1);
 
         $categories = Category::where("status", "1")
             ->where("cat_ust", null)
