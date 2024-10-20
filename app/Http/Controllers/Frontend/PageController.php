@@ -41,14 +41,19 @@ class PageController extends Controller
                 return $q;
 
             })
-            ->with("category:id,name,slug")
-            ->paginate(1);
+            ->with("category:id,name,slug");
+
+        $minprice = $products->min("price");
+        $maxprice = $products->max("price");
+
+
+        $products = $products->paginate(1);
 
         $categories = Category::where("status", "1")
             ->where("cat_ust", null)
             ->withCount("items")
             ->get();
-        return view("frontend.pages.products", compact((["products", "categories"])));
+        return view("frontend.pages.products", compact((["products", "categories", "minprice", "maxprice"])));
     }
     public function sale_products()
     {

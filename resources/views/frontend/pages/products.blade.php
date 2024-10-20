@@ -200,3 +200,11 @@
         </div>
     </div>
 @endsection
+
+@section('customjs')
+    <script>
+        var minprice = "{{ $minprice }}";
+
+        var maxprice = "{{ $maxprice }}";
+    </script>
+@endsection
