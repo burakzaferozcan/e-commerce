@@ -40,7 +40,10 @@ class PageController extends Controller
 
         })->paginate(1);
 
-        $categories = Category::where("status", "1")->where("cat_ust", null)->get();
+        $categories = Category::where("status", "1")
+            ->where("cat_ust", null)
+            ->withCount("items")
+            ->get();
         return view("frontend.pages.products", compact((["products", "categories"])));
     }
     public function sale_products()
