@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\About;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -38,7 +39,9 @@ class PageController extends Controller
             return $q;
 
         })->paginate(1);
-        return view("frontend.pages.products", compact(("products")));
+
+        $categories = Category::where("status", "1")->where("cat_ust", null)->get();
+        return view("frontend.pages.products", compact((["products", "categories"])));
     }
     public function sale_products()
     {
