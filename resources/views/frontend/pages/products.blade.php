@@ -19,33 +19,23 @@
                     <div class="row">
                         <div class="col-md-12 mb-5">
                             <div class="float-md-left mb-4">
-                                <h2 class="text-black h5">Shop All</h2>
+                                <h2 class="text-black h5">Ürünler</h2>
                             </div>
                             <div class="d-flex">
                                 <div class="dropdown mr-1 ml-md-auto">
-                                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle"
-                                        id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                        Latest
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                                        @if (!empty($categories) && $categories->count() > 0)
-                                            @foreach ($categories as $category)
-                                                <a class="dropdown-item" href="#">{{ $category->name }}</a>
-                                            @endforeach
-                                        @endif
-                                    </div>
+
                                 </div>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-secondary btn-sm dropdown-toggle"
-                                        id="dropdownMenuReference" data-toggle="dropdown">Reference</button>
+                                        id="dropdownMenuReference" data-toggle="dropdown">Sırala</button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-                                        <a class="dropdown-item" href="#">Relevance</a>
-                                        <a class="dropdown-item" href="#">Name, A to Z</a>
-                                        <a class="dropdown-item" href="#">Name, Z to A</a>
+                                        <a class="dropdown-item" href="#" data-sira="a_z_order">A-Z'ye Sırala</a>
+                                        <a class="dropdown-item" href="#" data-sira="z_a_order">Z-A'ye Sırala</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Price, low to high</a>
-                                        <a class="dropdown-item" href="#">Price, high to low</a>
+                                        <a class="dropdown-item" href="#" data-sira="price_min_order">Düşük Fiyata
+                                            Göre</a>
+                                        <a class="dropdown-item" href="#" data-sira="price_max_order">Yüksek Fiyata
+                                            Göre</a>
                                     </div>
                                 </div>
                             </div>
@@ -149,15 +139,13 @@
                         <div class="row">
                             @if (!empty($categories))
                                 @foreach ($categories as $category)
-                                    <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade"
-                                        data-aos-delay="">
-                                        <a class="block-2-item" href="#">
+                                    <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
+                                        <a class="block-2-item" href="{{ route($category->slug . '_products') }}">
                                             <figure class="image">
-                                                <img src="{{ asset($category->image) }}" alt=""
-                                                    class="img-fluid">
+                                                <img src="{{ asset($category->image) }}" alt="" class="img-fluid">
                                             </figure>
                                             <div class="text">
-                                                <span class="text-uppercase">Collections</span>
+                                                <span class="text-uppercase">Giyim</span>
                                                 <h3>{{ $category->name }}</h3>
                                             </div>
                                         </a>
