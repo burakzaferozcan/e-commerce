@@ -25,6 +25,8 @@ class PageController extends Controller
         $color = $request->color ?? null;
         $startPrice = $request->start_price ?? null;
         $endPrice = $request->end_price ?? null;
+        $order = $request->order ?? "id";
+        $short = $request->short ?? "desc";
 
 
 
@@ -50,8 +52,7 @@ class PageController extends Controller
 
 
 
-        $products = $products->paginate(1);
-
+        $products = $products->orderBy($order, $short)->paginate(20);
         $categories = Category::where("status", "1")
             ->where("cat_ust", null)
             ->withCount("items")
