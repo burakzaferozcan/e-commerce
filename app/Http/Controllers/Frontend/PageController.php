@@ -53,11 +53,11 @@ class PageController extends Controller
 
 
         $products = $products->orderBy($order, $short)->paginate(20);
-        $categories = Category::where("status", "1")
-            ->where("cat_ust", null)
-            ->withCount("items")
-            ->get();
-        return view("frontend.pages.products", compact((["products", "categories", "minprice", "maxprice", "sizeList", "colors"])));
+        // $categories = Category::where("status", "1")
+        //     ->where("cat_ust", null)
+        //     ->withCount("items")
+        //     ->get();
+        return view("frontend.pages.products", compact((["products", "minprice", "maxprice", "sizeList", "colors"])));
     }
     public function sale_products()
     {
