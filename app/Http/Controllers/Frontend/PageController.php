@@ -19,8 +19,9 @@ class PageController extends Controller
     {
         return view("frontend.pages.contact");
     }
-    public function products(Request $request)
+    public function products(Request $request, $slug = null)
     {
+        $category = request()->segment(1) ?? "";
         $size = $request->size ?? null;
         $color = $request->color ?? null;
         $startPrice = $request->start_price ?? null;
@@ -43,7 +44,13 @@ class PageController extends Controller
                 return $q;
 
             })
-            ->with("category:id,name,slug");
+            ->with("category:id,name,slug")
+            ->whereHas("category", function ($q) use ($category, $slug) {
+                if (!empty($slug)) {
+                    $q->where("slug", $slug);
+                }
+                return $q;
+            });
 
         $minprice = $products->min("price");
         $maxprice = $products->max("price");
