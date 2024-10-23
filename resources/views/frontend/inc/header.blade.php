@@ -43,38 +43,20 @@
                 <li class="has-children active">
                     <a href="{{ route('home') }}">Kategoriler</a>
                     <ul class="dropdown">
-                        {{-- @if (!empty($categories) && $categories->count() > 0)
-                            @foreach ($categories as $category)
-                                <li><a href="#">{{ $category->name }}</a></li>
-                            @endforeach
-                        @endif --}}
                         @if (!empty($categories) && $categories->count() > 0)
                             @foreach ($categories->where('cat_ust', null) as $category)
                                 <li class="has-children">
                                     <a href="{{ route($category->slug . '_products') }}">{{ $category->name }}</a>
                                     <ul class="dropdown">
-                                        @foreach ($categories as $subCategory)
-                                            @if ($subCategory->cat_ust == $category->id)
-                                                <li><a
-                                                        href="{{ route($category->slug . '_products', $subCategory->slug) }}">{{ $subCategory->name }}</a>
-                                                </li>
-                                            @endif
+                                        @foreach ($category->subcategory as $subCategory)
+                                            <li><a
+                                                    href="{{ route($category->slug . '_products', $subCategory->slug) }}">{{ $subCategory->name }}</a>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </li>
                             @endforeach
                         @endif
-                        {{-- <li><a href="#">{Menu One}</a></li>
-                            <li><a href="#">Menu Two</a></li>
-                            <li><a href="#">Menu Three</a></li>
-                            <li class="has-children">
-                                <a href="#">Sub Menu</a>
-                                <ul class="dropdown">
-                                    <li><a href="#">Menu One</a></li>
-                                    <li><a href="#">Menu Two</a></li>
-                                    <li><a href="#">Menu Three</a></li>
-                                </ul>
-                            </li> --}}
                     </ul>
                 </li>
                 <li>
