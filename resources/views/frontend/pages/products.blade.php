@@ -59,6 +59,8 @@
                                             <p class="mb-0">{{ $product->short_text }}</p>
                                             <p class="text-primary font-weight-bold">{{ number_format($product->price, 0) }}
                                             </p>
+                                            <p><a href="#" class="buy-now btn btn-sm btn-primary">Sepete Ekle</a></p>
+
                                         </div>
                                     </div>
                                 </div>

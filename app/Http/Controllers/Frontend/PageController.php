@@ -27,7 +27,7 @@ class PageController extends Controller
         $startPrice = $request->start_price ?? null;
         $endPrice = $request->end_price ?? null;
         $order = $request->order ?? "id";
-        $short = $request->short ?? "desc";
+        $sort = $request->sort ?? "desc";
 
 
 
@@ -59,7 +59,7 @@ class PageController extends Controller
 
 
 
-        $products = $products->orderBy($order, $short)->paginate(20);
+        $products = $products->orderBy($order, $sort)->paginate(21);
         // $categories = Category::where("status", "1")
         //     ->where("cat_ust", null)
         //     ->withCount("items")
@@ -79,8 +79,5 @@ class PageController extends Controller
             ->limit(6)->get();
         return view("frontend.pages.product", compact(["product", "products"]));
     }
-    public function cart()
-    {
-        return view("frontend.pages.cart");
-    }
+
 }

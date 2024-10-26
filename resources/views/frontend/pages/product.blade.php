@@ -21,26 +21,36 @@
                     <p>{!! $product->content !!}</p>
 
                     <p><strong class="text-primary h4">{{ number_format($product->price, 2) }}</strong></p>
+                    <form action="{{route("cart.add")}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{$product->id}}">
                     <div class="mb-1 d-flex">
+
+
                         <label for="option-sm" class="d-flex mr-3 mb-3">
                             <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio"
-                                    id="option-sm" name="shop-sizes"></span> <span
-                                class="d-inline-block text-black">Small</span>
+                                                                                                           id="option-Xm" value="XS" name="size"></span> <span
+                                class="d-inline-block text-black">XS</span>
+                        </label>
+                        <label for="option-sm" class="d-flex mr-3 mb-3">
+                            <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio"
+                                    id="option-sm" value="S" name="size"></span> <span
+                                class="d-inline-block text-black">S</span>
                         </label>
                         <label for="option-md" class="d-flex mr-3 mb-3">
                             <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio"
-                                    id="option-md" name="shop-sizes"></span> <span
-                                class="d-inline-block text-black">Medium</span>
+                                    id="option-md" value="M" name="size"></span> <span
+                                class="d-inline-block text-black">M</span>
                         </label>
                         <label for="option-lg" class="d-flex mr-3 mb-3">
                             <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio"
-                                    id="option-lg" name="shop-sizes"></span> <span
-                                class="d-inline-block text-black">Large</span>
+                                    id="option-lg" value="L" name="size"></span> <span
+                                class="d-inline-block text-black">L</span>
                         </label>
                         <label for="option-xl" class="d-flex mr-3 mb-3">
                             <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio"
-                                    id="option-xl" name="shop-sizes"></span> <span class="d-inline-block text-black"> Extra
-                                Large</span>
+                                    id="option-xl" value="XL" name="size"></span> <span class="d-inline-block text-black">
+                                XL</span>
                         </label>
                     </div>
                     <div class="mb-5">
@@ -48,7 +58,7 @@
                             <div class="input-group-prepend">
                                 <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
                             </div>
-                            <input type="text" class="form-control text-center" value="1" placeholder=""
+                            <input type="text" class="form-control text-center" value="1" name="qty" placeholder=""
                                 aria-label="Example text with button addon" aria-describedby="button-addon1">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
@@ -56,8 +66,8 @@
                         </div>
 
                     </div>
-                    <p><a href="cart.html" class="buy-now btn btn-sm btn-primary">Sepete Ekle</a></p>
-
+                    <p><button type="submit" class="buy-now btn btn-sm btn-primary">Sepete Ekle</button></p>
+                    </form>
                 </div>
             </div>
         </div>
@@ -82,7 +92,7 @@
                                                 class="img-fluid">
                                         </figure>
                                         <div class="block-4-text p-4">
-                                            <h3><a href="{{ route('product', $product->slug) }}">{{ $product->name }}</a>
+                                            <h3><a href="{{ route('product_detail', $product->slug) }}">{{ $product->name }}</a>
                                             </h3>
                                             <p class="text-primary font-weight-bold">{{ $product->price }}TL</p>
                                         </div>
