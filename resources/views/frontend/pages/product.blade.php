@@ -28,27 +28,31 @@
 
 
                         <label for="option-xs" class="d-flex mr-3 mb-3">
-                            <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio"
+                            <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" {{$product->size=="XS"?"checked":""}}
                                                                                                            id="option-xs" value="XS" name="size"></span> <span
                                 class="d-inline-block text-black">XS</span>
                         </label>
                         <label for="option-s" class="d-flex mr-3 mb-3">
                             <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio"
+                                                                                                           {{$product->size=="S"?"checked":""}}
                                     id="option-s" value="S" name="size"></span> <span
                                 class="d-inline-block text-black">S</span>
                         </label>
                         <label for="option-m" class="d-flex mr-3 mb-3">
                             <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio"
+                                                                                                           {{$product->size=="M"?"checked":""}}
                                     id="option-m" value="M" name="size"></span> <span
                                 class="d-inline-block text-black">M</span>
                         </label>
                         <label for="option-l" class="d-flex mr-3 mb-3">
                             <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio"
+                                                                                                           {{$product->size=="L"?"checked":""}}
                                     id="option-l" value="L" name="size"></span> <span
                                 class="d-inline-block text-black">L</span>
                         </label>
                         <label for="option-xl" class="d-flex mr-3 mb-3">
                             <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio"
+                                                                                                           {{$product->size=="XL"?"checked":""}}
                                     id="option-xl" value="XL" name="size"></span> <span class="d-inline-block text-black">
                                 XL</span>
                         </label>
