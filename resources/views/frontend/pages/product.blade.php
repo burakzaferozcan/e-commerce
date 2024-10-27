@@ -27,24 +27,24 @@
                     <div class="mb-1 d-flex">
 
 
-                        <label for="option-sm" class="d-flex mr-3 mb-3">
+                        <label for="option-xs" class="d-flex mr-3 mb-3">
                             <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio"
-                                                                                                           id="option-Xm" value="XS" name="size"></span> <span
+                                                                                                           id="option-xs" value="XS" name="size"></span> <span
                                 class="d-inline-block text-black">XS</span>
                         </label>
-                        <label for="option-sm" class="d-flex mr-3 mb-3">
+                        <label for="option-s" class="d-flex mr-3 mb-3">
                             <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio"
-                                    id="option-sm" value="S" name="size"></span> <span
+                                    id="option-s" value="S" name="size"></span> <span
                                 class="d-inline-block text-black">S</span>
                         </label>
-                        <label for="option-md" class="d-flex mr-3 mb-3">
+                        <label for="option-m" class="d-flex mr-3 mb-3">
                             <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio"
-                                    id="option-md" value="M" name="size"></span> <span
+                                    id="option-m" value="M" name="size"></span> <span
                                 class="d-inline-block text-black">M</span>
                         </label>
-                        <label for="option-lg" class="d-flex mr-3 mb-3">
+                        <label for="option-l" class="d-flex mr-3 mb-3">
                             <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio"
-                                    id="option-lg" value="L" name="size"></span> <span
+                                    id="option-l" value="L" name="size"></span> <span
                                 class="d-inline-block text-black">L</span>
                         </label>
                         <label for="option-xl" class="d-flex mr-3 mb-3">
