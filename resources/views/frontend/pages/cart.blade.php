@@ -13,6 +13,13 @@
     <div class="site-section">
         <div class="container">
             <div class="row mb-5">
+                <div class="col-lg-12">
+                    @if(session()->get("success"))
+                        <div class="alert alert-success text-center">{{session()->get("success")}}</div>
+                    @endif
+                </div>
+            </div>
+            <div class="row mb-5">
                     <div class="col-lg-12 site-blocks-table">
                         <table class="table table-bordered">
                             <thead>

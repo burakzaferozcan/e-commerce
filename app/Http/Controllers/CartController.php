@@ -18,7 +18,7 @@ class CartController extends Controller
     }
     public function add(Request $request){
         $productID=$request->product_id;
-        $qty=$request->qty;
+        $qty=$request->qty??1;
         $size=$request->size;
         $urun =Product::find($productID);
 
@@ -48,13 +48,12 @@ class CartController extends Controller
         return $request->all();
     }
     public function remove(Request $request){
-        return $request->all();
-        $productID=$request->product->id;
+        $productID=$request->product_id;
         $cartItem=session("cart",[]);
         if(array_key_exists($productID,$cartItem)){
             unset($cartItem[$productID]);
         }
-        session(["cart",$cartItem]);
+        session(["cart"=>$cartItem]);
         return back()->withSuccess("Ürün Başarıyla Sepetten Kaldırıldı.");
     }
 

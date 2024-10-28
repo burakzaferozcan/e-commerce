@@ -13,6 +13,13 @@
     <div class="site-section">
         <div class="container">
             <div class="row">
+                <div class="col-lg-12">
+                    @if(session()->get("success"))
+                        <div class="alert alert-success text-center">{{session()->get("success")}}</div>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6">
                     <img src="{{ asset($product->image) }}" alt="Image" class="img-fluid">
                 </div>
