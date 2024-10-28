@@ -13,8 +13,7 @@
     <div class="site-section">
         <div class="container">
             <div class="row mb-5">
-                <form class="col-md-12" method="post">
-                    <div class="site-blocks-table">
+                    <div class="col-lg-12 site-blocks-table">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -28,7 +27,7 @@
                             </thead>
                             <tbody>
 @if($cartItem)
-                            @foreach($cartItem as $cart)
+                            @foreach($cartItem as $key=>$cart)
                                 <tr>
                                     <td class="product-thumbnail">
                                         <img src="{{asset($cart['image'])}}" alt="Image" class="img-fluid">
@@ -36,7 +35,7 @@
                                     <td class="product-name">
                                         <h2 class="h5 text-black">{{$cart["name"]??""}}</h2>
                                     </td>
-                                    <td>>{{$cart["price"]}}</td>
+                                    <td>{{$cart["price"]}}</td>
                                     <td>
                                         <div class="input-group mb-3" style="max-width: 120px;">
                                             <div class="input-group-prepend">
@@ -54,14 +53,19 @@
 
                                     </td>
                                     <td>{{$cart["price"]*$cart["qty"]}}TL</td>
-                                    <td><a href="#" class="btn btn-primary btn-sm">X</a></td>
+                                    <td>
+                                        <form action="{{route("cart.remove")}}" method="POST">
+                                            @csrf
+                                            <input type="text" hidden name="product_id" value="{{$key}}">
+                                        <button type="submit" class="btn btn-primary btn-sm">X</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
 @endif
                             </tbody>
                         </table>
                     </div>
-                </form>
             </div>
 
             <div class="row">

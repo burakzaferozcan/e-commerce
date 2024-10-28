@@ -47,6 +47,15 @@ class CartController extends Controller
 
         return $request->all();
     }
-    public function remove(){}
+    public function remove(Request $request){
+        return $request->all();
+        $productID=$request->product->id;
+        $cartItem=session("cart",[]);
+        if(array_key_exists($productID,$cartItem)){
+            unset($cartItem[$productID]);
+        }
+        session(["cart",$cartItem]);
+        return back()->withSuccess("Ürün Başarıyla Sepetten Kaldırıldı.");
+    }
 
 }
