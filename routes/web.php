@@ -19,7 +19,6 @@ Route::group(["middleware" => "sitesetting"], function () {
     Route::get('/cart', [\App\Http\Controllers\CartController::class, 'index'])->name("cart");
     Route::post('/cart/add', [\App\Http\Controllers\CartController::class, 'add'])->name("cart.add");
     Route::post('/cart/remove', [\App\Http\Controllers\CartController::class, 'remove'])->name("cart.remove");
-
+    Auth::routes();
+Route::get("/logout",[AjaxController::class,"logout"])->name("logout");
 });
-
-

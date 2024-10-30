@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ContentFormRequest;
 use App\Models\Contact;
+use Illuminate\Support\Facades\Auth;
+
 class AjaxController extends Controller
 {
     public function contact_save(ContentFormRequest $request)
@@ -14,6 +16,10 @@ class AjaxController extends Controller
         Contact::create($data);
 
         return back()->withSuccess("Mesajınız Başarıyla Gönderildi.");
+    }
 
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('home');
     }
 }
