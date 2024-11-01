@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h4 class="card-title">Basic Table</h4>
                     <p class="card-description">
-                        Add class <code>.table</code>
+                        <a class="btn btn-success" href="{{route("panel.slider.create")}}">Oluştur</a>
                     </p>
                     <div class="table-responsive">
                         <table class="table">
