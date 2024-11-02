@@ -5,6 +5,18 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Slider Ekle</h4>
+                @if (session()->get('success'))
+                    <div class="alert alert-success">
+                        {{session()->get('success')}}
+                    </div>
+                @endif
+                @if ($errors)
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger">
+                            {{$error}}
+                        </div>
+                    @endforeach
+                @endif
                 <form action="{{route('panel.slider.store')}}" class="forms-sample" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
