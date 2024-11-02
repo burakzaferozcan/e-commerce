@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SliderRequest;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class SliderController extends Controller
 {
@@ -28,9 +31,31 @@ class SliderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SliderRequest $request)
     {
-        return $request->all();
+
+        if($request->hasFile("image")){
+            $image=$request->file("image");
+            $fileName=time()."-".Str::slug($request->name);
+            $extension=$image->getClientOriginalExtension();
+            $uplaodFolder="img/slider/";
+
+            if($extension=="pdf"||$extension=="svg"||$extension=="webp"){
+                $image->move(public_path($uplaodFolder),$fileName.".".$extension);
+            }else{
+                $image= Image::make($image);
+                $image->encode("webp",75)->save($uplaodFolder.$fileName.".webp");
+            }
+        }
+        $slider =  Slider::create([
+            'name'=>$request->name,
+            'link'=>$request->link,
+            'content'=>$request->content,
+            'status'=>$request->status,
+            "image"=>$image,
+        ]);
+
+        return back()->withSuccess('Başarıyla Oluşturuldu!');
     }
 
     /**
