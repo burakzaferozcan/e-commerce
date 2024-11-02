@@ -209,6 +209,8 @@
 <script src="{{ asset('backend') }}/js/todolist.js"></script>
 <script src="{{ asset('backend') }}/js/dashboard.js"></script>
 <script src="{{ asset('backend') }}/js/Chart.roundedBarCharts.js"></script>
+<script src="{{ asset('backend') }}/js/file-upload.js"></script>
+
 </body>
 </html>
 
