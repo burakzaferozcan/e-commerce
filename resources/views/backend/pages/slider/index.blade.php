@@ -23,7 +23,7 @@
                             </thead>
                             <tbody>
                             @if(!empty($sliders)&& $sliders->count()>0)
-                                @foreach($sliders as $slider) @endforeach
+                                @foreach($sliders as $slider)
                                 <tr>
                                     <td class="py-1">
                                         <img src="{{asset($slider->image)}}" alt="image"/>
@@ -35,6 +35,7 @@
                                     <td class="d-flex">
                                         <a href="{{route('panel.slider.edit',$slider->id)}}" class="btn btn-primary mr-2">Düzenle</a>
                                         <form action="{{route('panel.slider.destroy',$slider->id)}}" method="POST">
+                                            @csrf
                                             @method("DELETE")
                                         <button class="btn btn-danger mr-2">Sil</button>
                                         </form>
@@ -42,6 +43,7 @@
 
 
                                 </tr>
+                                @endforeach
                             @endif
 
                             </tbody>
