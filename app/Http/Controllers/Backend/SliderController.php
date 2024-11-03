@@ -36,23 +36,26 @@ class SliderController extends Controller
 
         if($request->hasFile("image")){
             $image=$request->file("image");
-            $fileName=time()."-".Str::slug($request->name);
             $extension=$image->getClientOriginalExtension();
+            $fileName=time()."-".Str::slug($request->name);
             $uplaodFolder="img/slider/";
 
             if($extension=="pdf"||$extension=="svg"||$extension=="webp"){
                 $image->move(public_path($uplaodFolder),$fileName.".".$extension);
+                $imageUrl=$uplaodFolder.$fileName.'.'.$extension;
             }else{
                 $image= Image::make($image);
                 $image->encode("webp",75)->save($uplaodFolder.$fileName.".webp");
+                $imageUrl=$uplaodFolder.$fileName.'.webp';
+
             }
         }
         $slider =  Slider::create([
             'name'=>$request->name,
             'link'=>$request->link,
-            'content'=>$request->content,
             'status'=>$request->status,
-            "image"=>$image,
+            'content' => $request->input('content'),
+            "image"=>$imageUrl??NULL,
         ]);
 
         return back()->withSuccess('Başarıyla Oluşturuldu!');
@@ -72,7 +75,7 @@ class SliderController extends Controller
     public function edit(string $id)
     {
         $slider=Slider::where('id', $id)->first();
-        return view("backend.pages.slider.edit",compact("slider"));
+        return view("backend.pages.slider.create",compact("slider"));
     }
 
     /**
@@ -80,7 +83,31 @@ class SliderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if($request->hasFile("image")){
+            $image=$request->file("image");
+            $extension=$image->getClientOriginalExtension();
+            $fileName=time()."-".Str::slug($request->name);
+            $uplaodFolder="img/slider/";
+
+            if($extension=="pdf"||$extension=="svg"||$extension=="webp"){
+                $image->move(public_path($uplaodFolder),$fileName.".".$extension);
+                $imageUrl=$uplaodFolder.$fileName.'.'.$extension;
+            }else{
+                $image= Image::make($image);
+                $image->encode("webp",75)->save($uplaodFolder.$fileName.".webp");
+                $imageUrl=$uplaodFolder.$fileName.'.webp';
+
+            }
+        }
+        $slider =  Slider::where('id',$id)->update([
+            'name'=>$request->name,
+            'link'=>$request->link,
+            'status'=>$request->status,
+            'content' => $request->input('content'),
+            "image"=>$imageUrl??NULL,
+        ]);
+
+        return back()->withSuccess('Başarıyla Güncellendi!');
     }
 
     /**
