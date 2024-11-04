@@ -13,6 +13,11 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('backend') }}/js/select.dataTables.min.css">
     <link rel="stylesheet" href="{{ asset('backend') }}/css/vertical-layout-light/style.css">
     <link rel="shortcut icon" href="{{ asset('backend') }}/images/favicon.png" />
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/default.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
 <div class="container-scroller">
@@ -210,7 +215,10 @@
 <script src="{{ asset('backend') }}/js/dashboard.js"></script>
 <script src="{{ asset('backend') }}/js/Chart.roundedBarCharts.js"></script>
 <script src="{{ asset('backend') }}/js/file-upload.js"></script>
-
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+@yield("customjs")
 </body>
 </html>
 

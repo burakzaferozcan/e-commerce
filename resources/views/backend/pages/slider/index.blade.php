@@ -31,7 +31,14 @@
                                     <td>{{$slider->name}}</td>
                                     <td>{{$slider->content??""}}</td>
                                     <td>{{$slider->link}}</td>
-                                    <td><label class="badge badge-{{$slider->status=="1"?"success":"danger"}}">{{$slider->status=="1"?"Aktif":"Pasif"}}</label></td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" class="durum" data-on="Aktif" value="1" data-off="Pasif" data-onstyle="success" data-offstyle="danger" {{ $slider->status == '1' ? 'checked' : '' }}  data-toggle="toggle">
+                                            </label>
+                                        </div>
+
+                                    </td>
                                     <td class="d-flex">
                                         <a href="{{route('panel.slider.edit',$slider->id)}}" class="btn btn-primary mr-2">Düzenle</a>
                                         <form action="{{route('panel.slider.destroy',$slider->id)}}" method="POST">
@@ -53,4 +60,33 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('customjs')
+    <script>
+        $(document).on('change', '.durum', function(e) {
+
+            id = $(this).closest('.item').attr('item-id');
+            statu = $(this).prop('checked');
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type:"POST",
+                url:"{{route('panel.slider.status')}}",
+                data:{
+                    id:id,
+                    statu:statu
+                },
+                success: function (response) {
+                    if (response.status == "true")
+                    {
+                        alertify.success("Durum Aktif Edildi");
+                    } else {
+                        alertify.error("Durum Pasif Edildi");
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

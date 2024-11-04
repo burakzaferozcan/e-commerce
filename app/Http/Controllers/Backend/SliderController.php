@@ -124,4 +124,12 @@ class SliderController extends Controller
         $slider->delete();
         return back()->withSuccess('Başarıyla Silindi!');
     }
+
+    public function status(Request $request) {
+
+        $update = $request->statu;
+        $updatecheck = $update == "false" ? '0' : '1';
+        Slider::where('id',$request->id)->update(['status'=> $updatecheck]);
+        return response(['error'=>false,'status'=>$update]);
+    }
 }
