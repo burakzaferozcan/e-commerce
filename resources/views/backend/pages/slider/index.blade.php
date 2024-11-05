@@ -24,7 +24,7 @@
                             <tbody>
                             @if(!empty($sliders)&& $sliders->count()>0)
                                 @foreach($sliders as $slider)
-                                <tr>
+                                <tr class="item" item-id="{{ $slider->id }}">
                                     <td class="py-1">
                                         <img src="{{asset($slider->image)}}" alt="image"/>
                                     </td>
@@ -39,15 +39,18 @@
                                         </div>
 
                                     </td>
+{{--                                    <td class="d-flex">--}}
+{{--                                        <a href="{{route('panel.slider.edit',$slider->id)}}" class="btn btn-primary mr-2">Düzenle</a>--}}
+{{--                                        <form action="{{route('panel.slider.destroy',$slider->id)}}" method="POST">--}}
+{{--                                            @csrf--}}
+{{--                                            @method("DELETE")--}}
+{{--                                        <button class="btn btn-danger mr-2">Sil</button>--}}
+{{--                                        </form>--}}
+{{--                                    </td>--}}
                                     <td class="d-flex">
-                                        <a href="{{route('panel.slider.edit',$slider->id)}}" class="btn btn-primary mr-2">Düzenle</a>
-                                        <form action="{{route('panel.slider.destroy',$slider->id)}}" method="POST">
-                                            @csrf
-                                            @method("DELETE")
-                                        <button class="btn btn-danger mr-2">Sil</button>
+                                            <button type="button" class="silBtn btn btn-danger mr-2">Sil</button>
                                         </form>
                                     </td>
-
 
                                 </tr>
                                 @endforeach
@@ -87,6 +90,38 @@
                     }
                 }
             });
+        });
+
+        $(document).on('click', '.silBtn', function(e) {
+            e.preventDefault();
+            var item = $(this).closest('.item');
+            id = item.attr('item-id');
+            alertify.confirm("Silmek İstediğine Eminmisin?","Silmek İstediğine Eminmisin?",
+                function(){
+
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        type:"DELETE",
+                        url:"{{route('panel.slider.destroy')}}",
+                        data:{
+                            id:id,
+                        },
+                        success: function (response) {
+                            if (response.error == false)
+                            {
+                                item.remove();
+                                alertify.success(response.message);
+                            }else {
+                                alertify.error("Bir Hata Oluştu");
+                            }
+                        }
+                    });
+                },
+                function(){
+                    alertify.error('Silme İşlemi İptal Edildi');
+                });
         });
     </script>
 @endsection

@@ -201,7 +201,7 @@
         </div>
     </div>
 </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="{{ asset('backend') }}/vendors/js/vendor.bundle.base.js"></script>
 <script src="{{ asset('backend') }}/vendors/chart.js/Chart.min.js"></script>
 <script src="{{ asset('backend') }}/vendors/datatables.net/jquery.dataTables.js"></script>
@@ -217,7 +217,6 @@
 <script src="{{ asset('backend') }}/js/file-upload.js"></script>
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 @yield("customjs")
 </body>
 </html>
