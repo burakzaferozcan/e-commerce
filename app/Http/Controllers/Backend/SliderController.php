@@ -36,21 +36,12 @@ class SliderController extends Controller
 
         if($request->hasFile("image")){
             $image=$request->file("image");
-            $extension=$image->getClientOriginalExtension();
-            $fileName=time()."-".Str::slug($request->name);
+            $fileName=$request->name;
             $uplaodFolder="img/slider/";
-
-            if($extension=="pdf"||$extension=="svg"||$extension=="webp"){
-                $image->move(public_path($uplaodFolder),$fileName.".".$extension);
-                $imageUrl=$uplaodFolder.$fileName.'.'.$extension;
-            }else{
-                $image= Image::make($image);
-                $image->encode("webp",75)->save($uplaodFolder.$fileName.".webp");
-                $imageUrl=$uplaodFolder.$fileName.'.webp';
-
-            }
+            $imageUrl =resimyukle($image,$fileName,$uplaodFolder);
         }
-        $slider =  Slider::create([
+
+         Slider::create([
             'name'=>$request->name,
             'link'=>$request->link,
             'status'=>$request->status,
@@ -83,22 +74,16 @@ class SliderController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $slider=Slider::where("id",$id)->firstOrFail();
         if($request->hasFile("image")){
+            dosyasil($slider->image);
+
             $image=$request->file("image");
-            $extension=$image->getClientOriginalExtension();
-            $fileName=time()."-".Str::slug($request->name);
+            $fileName=$request->name;
             $uplaodFolder="img/slider/";
-
-            if($extension=="pdf"||$extension=="svg"||$extension=="webp"){
-                $image->move(public_path($uplaodFolder),$fileName.".".$extension);
-                $imageUrl=$uplaodFolder.$fileName.'.'.$extension;
-            }else{
-                $image= Image::make($image);
-                $image->encode("webp",75)->save($uplaodFolder.$fileName.".webp");
-                $imageUrl=$uplaodFolder.$fileName.'.webp';
-
-            }
+            $imageUrl =resimyukle($image,$fileName,$uplaodFolder);
         }
+
         $slider =  Slider::where('id',$id)->update([
             'name'=>$request->name,
             'link'=>$request->link,

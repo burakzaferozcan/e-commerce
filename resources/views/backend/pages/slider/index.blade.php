@@ -40,7 +40,7 @@
 
                                     </td>
 {{--                                    <td class="d-flex">--}}
-{{--                                        <a href="{{route('panel.slider.edit',$slider->id)}}" class="btn btn-primary mr-2">Düzenle</a>--}}
+
 {{--                                        <form action="{{route('panel.slider.destroy',$slider->id)}}" method="POST">--}}
 {{--                                            @csrf--}}
 {{--                                            @method("DELETE")--}}
@@ -48,8 +48,8 @@
 {{--                                        </form>--}}
 {{--                                    </td>--}}
                                     <td class="d-flex">
+                                        <a href="{{route('panel.slider.edit',$slider->id)}}" class="btn btn-primary mr-2">Düzenle</a>
                                             <button type="button" class="silBtn btn btn-danger mr-2">Sil</button>
-                                        </form>
                                     </td>
 
                                 </tr>
