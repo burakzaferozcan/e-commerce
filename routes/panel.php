@@ -13,6 +13,9 @@ Route::group(["middleware" => ["panelsetting","auth"],"prefix"=>"panel","as"=>"p
     Route::delete('/slider/destroy', [\App\Http\Controllers\Backend\SliderController::class, 'destroy'])->name("slider.destroy");
     Route::post('/slider-status/update', [\App\Http\Controllers\Backend\SliderController::class, 'status'])->name("slider.status");
 
+    Route::resource('/category', \App\Http\Controllers\Backend\CategoryController::class)->except('destroy');
+    Route::delete('/category/destroy', [\App\Http\Controllers\Backend\CategoryController::class,'destroy'])->name('category.destroy');
+    Route::post('/category-status/update', [\App\Http\Controllers\Backend\CategoryController::class,'status'])->name('category.status');
 
 
 });
