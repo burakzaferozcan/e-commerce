@@ -35,17 +35,19 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
 
-        $category = Category::create([
+        if($request->hasFile("image")){
+            $image=$request->file("image");
+            $fileName=$request->name;
+            $uplaodFolder="img/category/";
+            $imageUrl =resimyukle($image,$fileName,$uplaodFolder);
+        }
+       Category::create([
             'name' => $request->name,
             'cat_ust' => $request->cat_ust,
             'status' => $request->status,
             'content' => $request->input('content'),
+            "image"=>$imageUrl??NULL,
         ]);
-
-
-        if ($request->hasFile('image')) {
-            $this->fileSave('Category', 'kategori', $request, $category);
-        }
 
         return back()->withSuccess('Başarıyla Oluşturuldu!');
     }
@@ -64,8 +66,6 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         $category = Category::where('id', $id)->first();
-
-
         $categories = Category::get();
         return view('backend.pages.category.create', compact('category', 'categories'));
     }
@@ -78,17 +78,19 @@ class CategoryController extends Controller
 
         $category = Category::where('id', $id)->firstOrFail();
 
+        if($request->hasFile("image")){
+            $image=$request->file("image");
+            $fileName=$request->name;
+            $uplaodFolder="img/category/";
+            $imageUrl =resimyukle($image,$fileName,$uplaodFolder);
+        }
         $category->update([
             'name' => $request->name,
             'cat_ust' => $request->cat_ust,
             'status' => $request->status,
             'content' => $request->input('content'),
+            "image"=>$imageUrl??NULL,
         ]);
-
-
-        if ($request->hasFile('image')) {
-            $this->fileSave('Category', 'kategori', $request, $category);
-        }
 
         return back()->withSuccess('Başarıyla Güncellendi!');
     }
@@ -98,25 +100,14 @@ class CategoryController extends Controller
      */
     public function destroy(Request $request)
     {
-
         $category = Category::where('id', $request->id)->firstOrFail();
-
-        $imageMedia = Image::where('model_name', 'Category')->where('table_id', $category->id)->first();
-
-        if (!empty($imageMedia->data)) {
-            foreach ($imageMedia->data as $img) {
-                dosyasil($img['image']);
-            }
-            $imageMedia->delete();
-        }
-
+        dosyasil($category->image);
         $category->delete();
         return response(['error' => false, 'message' => 'Başarıyla Silindi.']);
     }
 
     public function status(Request $request)
     {
-
         $update = $request->statu;
         $updatecheck = $update == "false" ? '0' : '1';
 
