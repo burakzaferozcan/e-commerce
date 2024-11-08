@@ -9,18 +9,24 @@ use Illuminate\Http\Request;
 class AboutController extends Controller
 {
     public function index() {
-        $about = About::where('id',1)->with('images')->first();
+        $about = About::where('id',1)->first();
         return view('backend.pages.about.index',compact('about'));
     }
 
     public function update(Request $request, $id = 1) {
 
+        if($request->hasFile("image")){
+            $image=$request->file("image");
+            $fileName=$request->name;
+            $uplaodFolder="img/about/";
+            $imageUrl =resimyukle($image,$fileName,$uplaodFolder);
+        }
 
-        $about = About::where('id',$id)->first();
 
         About::updateOrCreate(
             ['id'=>$id],
             [
+                "image"=>$imageUrl??NULL,
                 'name'=>$request->name,
                 'content'=>$request->input("content"),
                 'text_1_icon'=>$request->text_1_icon,
@@ -34,10 +40,6 @@ class AboutController extends Controller
                 'text_3_content'=>$request->text_3_content,
             ]
         );
-
-        if ($request->hasFile('image')) {
-            $this->fileSave('About', 'about', $request, $about);
-        }
 
         return back()->withSuccess('Başarıyla Güncellendi!');
     }

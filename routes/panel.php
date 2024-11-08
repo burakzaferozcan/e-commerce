@@ -17,7 +17,7 @@ Route::group(["middleware" => ["panelsetting","auth"],"prefix"=>"panel","as"=>"p
     Route::delete('/category/destroy', [\App\Http\Controllers\Backend\CategoryController::class,'destroy'])->name('category.destroy');
     Route::post('/category-status/update', [\App\Http\Controllers\Backend\CategoryController::class,'status'])->name('category.status');
 
-    Route::get('/about', [AboutController::class,'index'])->name('about.index');
-    Route::post('/about/update', [AboutController::class,'update'])->name('about.update');
+    Route::get('/about', [\App\Http\Controllers\Backend\AboutController::class,'index'])->name('about.index');
+    Route::post('/about/update', [\App\Http\Controllers\Backend\AboutController::class,'update'])->name('about.update');
 });
 
