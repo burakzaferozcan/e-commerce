@@ -22,10 +22,10 @@ class PageController extends Controller
     public function products(Request $request, $slug = null)
     {
         $category = request()->segment(1) ?? "";
-        $size = $request->size ?? null;
-        $color = $request->color ?? null;
-        $startPrice = $request->start_price ?? null;
-        $endPrice = $request->end_price ?? null;
+        $sizes = $request->size ?? null;
+        $colors = $request->color ?? null;
+        $startPrice = $request->min ?? null;
+        $endPrice = $request->max ?? null;
         $order = $request->order ?? "id";
         $sort = $request->sort ?? "desc";
 
@@ -33,11 +33,11 @@ class PageController extends Controller
 
         $products = Product::where("status", "1")
             ->select(["id", "name", "slug", "size", "color", "price", "category_id", "image"])
-            ->where(function ($q) use ($size, $color, $startPrice, $endPrice) {
-                if (!empty($size)) {
-                    $q->where("size", $size);
-                }if (!empty($color)) {
-                    $q->where("color", $color);
+            ->where(function ($q) use ($sizes, $colors, $startPrice, $endPrice) {
+                if (!empty($sizes)) {
+                    $q->whereIn("size", $sizes);
+                }if (!empty($colors)) {
+                    $q->whereIn("color", $colors);
                 }if (!empty($startPrice) && !empty($endPrice)) {
                     $q->whereBetween("price", [$startPrice, $endPrice]);
                 }
@@ -52,19 +52,16 @@ class PageController extends Controller
                 return $q;
             });
 
-        $minprice = $products->min("price");
-        $maxprice = $products->max("price");
         $sizeList = Product::where("status", "1")->groupBy("size")->pluck("size")->toArray();
         $colors = Product::where("status", "1")->groupBy("color")->pluck("color")->toArray();
 
 
 
         $products = $products->orderBy($order, $sort)->paginate(21);
-        // $categories = Category::where("status", "1")
-        //     ->where("cat_ust", null)
-        //     ->withCount("items")
-        //     ->get();
-        return view("frontend.pages.products", compact((["products", "minprice", "maxprice", "sizeList", "colors"])));
+
+        $maxprice=Product::max("price");
+
+        return view("frontend.pages.products", compact((["products", "maxprice", "sizeList", "colors"])));
     }
     public function sale_products()
     {
