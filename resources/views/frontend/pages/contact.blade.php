@@ -17,8 +17,8 @@
                     <h2 class="h3 mb-3 text-black">Get In Touch</h2>
                 </div>
                 <div class="col-md-7">
-                    @if (session()->has('success'))
-                        <div class="alert alert-success text-center">{{ session()->get('success') }}</div>
+                    @if (session()->has('message'))
+                        <div class="alert alert-success text-center">{{ session()->get('message') }}</div>
                     @endif
                     @if ($errors->any())
                         @foreach ($errors->all() as $err)

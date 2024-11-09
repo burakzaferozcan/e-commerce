@@ -19,5 +19,11 @@ Route::group(["middleware" => ["panelsetting","auth"],"prefix"=>"panel","as"=>"p
 
     Route::get('/about', [\App\Http\Controllers\Backend\AboutController::class,'index'])->name('about.index');
     Route::post('/about/update', [\App\Http\Controllers\Backend\AboutController::class,'update'])->name('about.update');
+
+    Route::get('/contact', [\App\Http\Controllers\Backend\ContactController::class,'index'])->name('contact.index');
+    Route::get('/contact/{id}/edit', [\App\Http\Controllers\Backend\ContactController::class,'edit'])->name('contact.edit');
+    Route::put('/contact/{id}/update', [\App\Http\Controllers\Backend\ContactController::class,'update'])->name('contact.update');
+    Route::delete('/contact/destroy', [\App\Http\Controllers\Backend\ContactController::class,'destroy'])->name('contact.destroy');
+    Route::post('/contact-durum/update', [\App\Http\Controllers\Backend\ContactController::class,'status'])->name('contact.status');
 });
 
