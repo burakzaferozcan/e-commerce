@@ -19,49 +19,112 @@ class PageController extends Controller
     {
         return view("frontend.pages.contact");
     }
-    public function products(Request $request, $slug = null)
-    {
-        $category = request()->segment(1) ?? "";
-        $sizes = $request->size ?? null;
-        $colors = $request->color ?? null;
-        $startPrice = $request->min ?? null;
-        $endPrice = $request->max ?? null;
-        $order = $request->order ?? "id";
-        $sort = $request->sort ?? "desc";
+    public function urunler(Request $request,$slug=null) {
 
 
+        $category = request()->segment(1) ?? null;
 
-        $products = Product::where("status", "1")
-            ->select(["id", "name", "slug", "size", "color", "price", "category_id", "image"])
-            ->where(function ($q) use ($sizes, $colors, $startPrice, $endPrice) {
-                if (!empty($sizes)) {
-                    $q->whereIn("size", $sizes);
-                }if (!empty($colors)) {
-                    $q->whereIn("color", $colors);
-                }if (!empty($startPrice) && !empty($endPrice)) {
-                    $q->whereBetween("price", [$startPrice, $endPrice]);
+        $sizes = !empty($request->size) ? explode(',',$request->size) : null;
+
+        $colors = !empty($request->color) ? explode(',',$request->color) : null;
+
+        $startprice = $request->min ?? null;
+
+        $endprice = $request->max ?? null;
+
+        $order = $request->order ?? 'id';
+        $sort = $request->sort ?? 'desc';
+
+
+        $anakategori = null;
+        $altkategori = null;
+        if(!empty($category) && empty($slug)) {
+            $anakategori = Category::where('slug',$category)->first();
+            $categorySlug = $anakategori->slug ?? '';
+        }else if (!empty($category) && !empty($slug)){
+            $anakategori = Category::where('slug',$category)->first();
+            $altkategori = Category::where('slug',$slug)->first();
+            $categorySlug = $altkategori->slug ?? '';
+        }
+
+
+        $breadcrumb = [
+            'sayfalar' => [
+
+            ],
+            'active'=> 'Ürünler'
+        ];
+
+        if(!empty($anakategori) && empty($altkategori)) {
+            $breadcrumb['active'] = $anakategori->name;
+        }
+
+        if(!empty($altkategori)) {
+            $breadcrumb['sayfalar'][] = [
+                'link'=> route($anakategori->slug.'urunler'),
+                'name' => $anakategori->name
+            ];
+
+            $breadcrumb['active'] = $altkategori->name;
+        }
+
+
+        $products = Product::where('status','1')->select(['id','name','slug','size','color','price','category_id','image'])
+            ->where(function($q) use($sizes,$colors,$startprice,$endprice) {
+                if(!empty($sizes)) {
+                    $q->whereIn('size', $sizes);
+                }
+                if(!empty($colors)) {
+                    $q->whereIn('color', $colors);
+                }
+
+                if(!empty($startprice) && $endprice) {
+                    //$q->whereBetween('price', [$startprice,$endprice]);
+
+                    $q->where('price','>=', $startprice);
+
+                    $q->where('price','<=', $endprice);
                 }
                 return $q;
-
             })
-            ->with("category:id,name,slug")
-            ->whereHas("category", function ($q) use ($category, $slug) {
-                if (!empty($slug)) {
-                    $q->where("slug", $slug);
+            ->with('category:id,name,slug')
+            ->whereHas('category', function($q) use ($categorySlug) {
+                if(!empty($categorySlug)) {
+                    $q->where('slug', $categorySlug);
                 }
                 return $q;
-            });
+            })
+            ->with('images')
+            ->orderBy($order,$sort)->paginate(21);
 
-        $sizeList = Product::where("status", "1")->groupBy("size")->pluck("size")->toArray();
-        $colors = Product::where("status", "1")->groupBy("color")->pluck("color")->toArray();
+        if($request->ajax()) {
+
+            $view = view('frontend.ajax.productList',compact('products'))->render();
+            return response(['data'=>$view,  'paginate'=>(string) $products->withQueryString()->links('vendor.pagination.custom')]);
+        }
+
+        $sizelists =  Product::where('status','1')->groupBy('size')->pluck('size')->toArray();
+
+        $colors =  Product::where('status','1')->groupBy('color')->pluck('color')->toArray();
+
+        $maxprice = Product::max('price');
 
 
 
-        $products = $products->orderBy($order, $sort)->paginate(21);
+        $seolists = metaolustur($category);
 
-        $maxprice=Product::max("price");
+        $seo = [
+            'title' =>  $seolists['title'] ?? '',
+            'description' => $seolists['description'] ?? '',
+            'keywords' => $seolists['keywords'] ?? '',
+            'image' => asset('img/page-bg.jpg'),
+            'url'=>  $seolists['currenturl'],
+            'canonical'=> $seolists['trpage'],
+            'robots' => 'index, follow',
+        ];
 
-        return view("frontend.pages.products", compact((["products", "maxprice", "sizeList", "colors"])));
+
+        return view('frontend.pages.products',compact('seo','breadcrumb','products','maxprice','sizelists','colors'));
     }
     public function sale_products()
     {
