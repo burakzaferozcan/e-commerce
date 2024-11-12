@@ -26,17 +26,13 @@
 
                                 </div>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle"
-                                        id="dropdownMenuReference" data-toggle="dropdown">Sırala</button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-                                        <a class="dropdown-item" href="#" data-sira="a_z_order">A-Z'ye Sırala</a>
-                                        <a class="dropdown-item" href="#" data-sira="z_a_order">Z-A'ye Sırala</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#" data-sira="price_min_order">Düşük Fiyata
-                                            Göre</a>
-                                        <a class="dropdown-item" href="#" data-sira="price_max_order">Yüksek Fiyata
-                                            Göre</a>
-                                    </div>
+                                    <select class="form-control" id="orderList">
+                                        <option class="dropdown-item" value="">Sıralama Seçiniz</option>
+                                        <option class="dropdown-item" value="id-asc">A-Z ye Sırala</option>
+                                        <option class="dropdown-item" value="id-desc">Z-A ye Sırala</option>
+                                        <option class="dropdown-item" value="price-asc">Düşük Fiyata göre sırala</option>
+                                        <option class="dropdown-item" value="price-desc">Yüksek Fiyata göre sırala</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -111,6 +107,8 @@
                             <div id="slider-range" class="border-primary"></div>
                             <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white"
                                 disabled="" />
+                            <input type="text" name="text" id="priceBetween" class="form-control border-0 text-center pl-0 bg-white"
+                                />
                         </div>
 
                         <div class="mb-4">
@@ -186,7 +184,26 @@
         var url=new URL(window.location.href);
 
         $(document).on("click",".filterBtn",function (e){
+            filtered();
+        })
 
+
+        $(document).on('change', '#orderList', function(e) {
+
+            var order = $(this).val();
+            if(order != '') {
+                orderby = order.split('-');
+                url.searchParams.set("order", orderby[0])
+                url.searchParams.set("sort", orderby[1])
+            }else {
+                url.searchParams.delete('order');
+                url.searchParams.delete('sort');
+            }
+            filtered();
+        });
+
+
+        function filtered(){
             let colorList  = $(".colorList:checked" ).map((_,chk) => chk.value).get()
             let sizeList = $(".sizeList:checked").map((_,chk) => chk.value).get()
             if (colorList.length  > 0) {
@@ -201,11 +218,15 @@
                 url.searchParams.delete('size');
             }
 
-           var newUrl = url.href;
-            window.history.pushState({}, '', newUrl);
-            location.reload();
+            var price = $('#priceBetween').val().split('-');
+            url.searchParams.set("min", price[0])
 
-        })
+            url.searchParams.set("max", price[1])
+
+            var newUrl = url.href;
+            window.history.pushState({}, '', newUrl);
+             location.reload();
+        }
 
     </script>
 @endsection

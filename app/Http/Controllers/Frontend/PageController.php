@@ -39,7 +39,8 @@ class PageController extends Controller
                 }if (!empty($colors)) {
                     $q->whereIn("color", $colors);
                 }if (!empty($startPrice) && !empty($endPrice)) {
-                    $q->whereBetween("price", [$startPrice, $endPrice]);
+                    $q->where('price','>=', $startPrice);
+                    $q->where('price','<=', $endPrice);
                 }
                 return $q;
 
