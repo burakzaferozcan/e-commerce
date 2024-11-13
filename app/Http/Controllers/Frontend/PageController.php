@@ -51,14 +51,15 @@ class PageController extends Controller
                     $q->where("slug", $slug);
                 }
                 return $q;
-            });
+            })->orderBy($order, $sort)->paginate(21);
+
+        if($request->ajax()){
+            $view = view("frontend.ajax.productList",compact("products"))->render();
+            return response(["data"=>$view,"paginate"=>(string)$products->withQueryString()->links('vendor.pagination::bootstrap-4')]);
+        }
 
         $sizeList = Product::where("status", "1")->groupBy("size")->pluck("size")->toArray();
         $colors = Product::where("status", "1")->groupBy("color")->pluck("color")->toArray();
-
-
-
-        $products = $products->orderBy($order, $sort)->paginate(21);
 
         $maxprice=Product::max("price");
 
