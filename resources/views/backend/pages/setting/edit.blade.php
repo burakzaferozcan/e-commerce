@@ -57,21 +57,11 @@
                             <option value="ckeditor" {{isset($setting->set_type) && $setting->set_type  == 'ckeditor' ? 'selected' : ''}}>Ckeditor</option>
                             <option value="textarea" {{isset($setting->set_type) && $setting->set_type  == 'textarea' ? 'selected' : ''}}>TextArea</option>
                             <option value="file" {{isset($setting->set_type) && $setting->set_type  == 'file' ? 'selected' : ''}}>File</option>
-                            <option value="image" {{isset($setting->set_type) && $setting->set_type  == 'image' ? 'selected' : ''}}>Resim</option>
+                            <option value="image" {{isset($setting->set_type) && $setting->set_type  == 'image' ? 'selected' : ''}}>Fotoğraf</option>
                             <option value="text" {{isset($setting->set_type) && $setting->set_type  == 'text' ? 'selected' : ''}}>Text</option>
                             <option value="email" {{isset($setting->set_type) && $setting->set_type  == 'email' ? 'selected' : ''}}>Email</option>
                         </select>
 
-                        {{--  <div class="form-group">
-                              <label>Resim</label>
-                              <input type="file" name="image" class="file-upload-default">
-                              <div class="input-group col-xs-12">
-                                <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                                <span class="input-group-append">
-                                  <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                                </span>
-                              </div>
-                            </div> --}}
 
                         <div class="form-group">
                             <label for="name">Key</label>
@@ -94,12 +84,9 @@
                                 @elseif (isset($setting->set_type) && $setting->set_type == 'email')
                                     <input type="email" value="{{$setting->data ?? ''}}" class="form-control">
                                 @else
-
                                 @endif
                             </div>
-
                         </div>
-
                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     </form>
                 </div>

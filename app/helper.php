@@ -38,3 +38,10 @@ if (!function_exists('strLimit')) {
         return Str::limit($text, $limit, $end);
     }
 }
+
+function klasorac($dosyayol,$izinler=0777)
+{
+    if (!file_exists($dosyayol)){
+        mkdir($dosyayol,$izinler,true);
+    }
+}

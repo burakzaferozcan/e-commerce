@@ -18,7 +18,6 @@ class SettingController extends Controller
 
     public function store(Request $request) {
         $key = $request->name;
-
         SiteSetting::firstOrCreate([
             'name'=>$key,
         ],[
@@ -26,7 +25,6 @@ class SettingController extends Controller
             'data'=>$request->data,
             'set_type'=>$request->set_type
         ]);
-
         return back()->withSuccess('Başarılı');
     }
 
@@ -38,7 +36,6 @@ class SettingController extends Controller
 
     public function update(Request $request, $id) {
         $setting = SiteSetting::where('id',$id)->first();
-
         $key = $request->name;
 
         if($request->hasFile('data')) {
