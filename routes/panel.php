@@ -25,5 +25,12 @@ Route::group(["middleware" => ["panelsetting","auth"],"prefix"=>"panel","as"=>"p
     Route::put('/contact/{id}/update', [\App\Http\Controllers\Backend\ContactController::class,'update'])->name('contact.update');
     Route::delete('/contact/destroy', [\App\Http\Controllers\Backend\ContactController::class,'destroy'])->name('contact.destroy');
     Route::post('/contact-durum/update', [\App\Http\Controllers\Backend\ContactController::class,'status'])->name('contact.status');
+
+    Route::get('/setting', [\App\Http\Controllers\Backend\SettingController::class,'index'])->name('setting.index');
+    Route::get('/setting/create', [\App\Http\Controllers\Backend\SettingController::class,'create'])->name('setting.create');
+    Route::post('/setting/store', [\App\Http\Controllers\Backend\SettingController::class,'store'])->name('setting.store');
+    Route::get('/setting/{id}/edit', [\App\Http\Controllers\Backend\SettingController::class,'edit'])->name('setting.edit');
+    Route::put('/setting/{id}/update', [\App\Http\Controllers\Backend\SettingController::class,'update'])->name('setting.update');
+    Route::delete('/setting/destroy', [\App\Http\Controllers\Backend\SettingController::class,'destroy'])->name('setting.destroy');
 });
 
