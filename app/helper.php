@@ -39,9 +39,11 @@ if (!function_exists('strLimit')) {
     }
 }
 
-function klasorac($dosyayol,$izinler=0777)
+if(!function_exists('klasorac')){
+    function klasorac($dosyayol,$izinler=0777)
 {
     if (!file_exists($dosyayol)){
         mkdir($dosyayol,$izinler,true);
     }
+}
 }

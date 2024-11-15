@@ -77,6 +77,7 @@
 
             <div class="row">
                 <div class="col-md-6">
+                    <form action="" method="POST">
                     <div class="row">
                         <div class="col-md-12">
                             <label class="text-black h4" for="coupon">İndirim Kuponu</label>
@@ -89,6 +90,7 @@
                             <button class="btn btn-primary btn-sm">Kupon Kodu Onayla</button>
                         </div>
                     </div>
+                    </form>
                 </div>
                 <div class="col-md-6 pl-5">
                     <div class="row justify-content-end">
