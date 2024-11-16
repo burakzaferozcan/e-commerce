@@ -20,7 +20,7 @@
                 <div class="block-5 mb-5">
                     <h3 class="footer-heading mb-4">İletişim</h3>
                     <ul class="list-unstyled">
-                        <li class="address">{{ $settings['Adres'] }}</li>
+                        <li class="address">{!! $settings['Adres'] !!}</li>
                         <li class="phone"><a href="tel://{{ $settings['Telefon'] }}">{{ $settings['Telefon'] }}</a>
                         </li>
                         <li class="email">{{ $settings['Email'] }}</li>

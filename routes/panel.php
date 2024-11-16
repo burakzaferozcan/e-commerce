@@ -32,5 +32,9 @@ Route::group(["middleware" => ["panelsetting","auth"],"prefix"=>"panel","as"=>"p
     Route::get('/setting/{id}/edit', [\App\Http\Controllers\Backend\SettingController::class,'edit'])->name('setting.edit');
     Route::put('/setting/{id}/update', [\App\Http\Controllers\Backend\SettingController::class,'update'])->name('setting.update');
     Route::delete('/setting/destroy', [\App\Http\Controllers\Backend\SettingController::class,'destroy'])->name('setting.destroy');
+
+    Route::resource('/product', ProductController::class)->except('destroy');
+    Route::delete('/product/destroy', [ProductController::class,'destroy'])->name('product.destroy');
+    Route::post('/product-durum/update', [ProductController::class,'status'])->name('product.status');
 });
 
