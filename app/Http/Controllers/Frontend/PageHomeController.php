@@ -1,20 +1,27 @@
 <?php
 
 namespace App\Http\Controllers\Frontend;
-use App\Http\Controllers\Controller;
+
 use App\Models\About;
-use App\Models\Category;
 use App\Models\Slider;
-use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Http\Controllers\Controller;
 
 class PageHomeController extends Controller
 {
-    public function index()
-    {
-        $slider = Slider::where("status", "1")->first();
-        $title = "Anasayfa";
+    public function index() {
 
-        $about = About::where("id", 1)->first();
-        return view("frontend.pages.index", compact("slider", "title", "about"));
+        $slider = Slider::where('status','1')->first();
+        $title = "Anasayfa";
+        $about = About::where('id',1)->first();
+
+        $lastproducts = Product::where('status','1')
+            ->select(['id','name','slug','size','color','price','category_id','image'])
+            ->with('category')
+            ->orderBy('id','desc')
+            ->limit(10)
+            ->get();
+
+        return view('frontend.pages.index',compact('slider','title','about','lastproducts'));
     }
 }

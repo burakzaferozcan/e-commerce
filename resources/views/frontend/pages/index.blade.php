@@ -56,113 +56,63 @@
     <div class="site-section site-blocks-2">
         <div class="container">
             <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
-                    <a class="block-2-item" href="{{ route('kadin_products') }}">
-                        <figure class="image">
-                            <img src="images/women.jpg" alt="" class="img-fluid">
-                        </figure>
-                        <div class="text">
-                            <span class="text-uppercase">Giyim</span>
-                            <h3>Kadın</h3>
+                @if (!empty($categories) && $categories->count() > 0)
+                    @foreach ($categories->where('cat_ust',null) as $category)
+                        <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
+                            <a class="block-2-item" href="{{url($category->slug)}}">
+                                <figure class="image">
+
+                                    @php
+                                        $imagescat = collect($category->images->data ?? '');
+                                    @endphp
+                                    <img src="{{asset($imagescat->sortByDesc('vitrin')->first()['image'] ?? 'img/resimyok.png')}}"  alt="{{$imagescat->sortByDesc('vitrin')->first()['alt'] ?? ''}}" class="img-fluid" ></img>
+
+                                </figure>
+                                <div class="text">
+                                    <h3>{{$category->name}}</h3>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="100">
-                    <a class="block-2-item" href="{{ route('erkek_products') }}">
-                        <figure class="image">
-                            <img src="images/children.jpg" alt="" class="img-fluid">
-                        </figure>
-                        <div class="text">
-                            <span class="text-uppercase">Giyim</span>
-                            <h3>Çocuk</h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="200">
-                    <a class="block-2-item" href="{{ route('cocuk_products') }}">
-                        <figure class="image">
-                            <img src="images/men.jpg" alt="" class="img-fluid">
-                        </figure>
-                        <div class="text">
-                            <span class="text-uppercase">Giyim</span>
-                            <h3>Erkek</h3>
-                        </div>
-                    </a>
-                </div>
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>
+
 
     <div class="site-section block-3 site-blocks-2 bg-light">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-7 site-section-heading text-center pt-4">
-                    <h2>Son Eklenenler</h2>
+                    <h2>Yeni Eklenen Ürünlerimiz</h2>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="nonloop-block-3 owl-carousel">
-                        <div class="item">
-                            <div class="block-4 text-center">
-                                <figure class="block-4-image">
-                                    <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="#">Tank Top</a></h3>
-                                    <p class="mb-0">Finding perfect t-shirt</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
+
+                        @if (!empty($lastproducts) && $lastproducts->count() > 0)
+                            @foreach ($lastproducts as $item)
+                                <div class="item">
+                                    <div class="block-4 text-center">
+                                        <figure class="block-4-image">
+
+                                            @php
+                                                $imageproduct = collect($item->images->data ?? '');
+                                            @endphp
+                                            <img src="{{asset($imageproduct->sortByDesc('vitrin')->first()['image'] ?? 'img/resimyok.png')}}"  alt="{{$imageproduct->sortByDesc('vitrin')->first()['alt'] ?? ''}}" class="img-fluid" ></img>
+
+
+                                        </figure>
+                                        <div class="block-4-text p-4">
+                                            <h3><a href="#">{{$item->name}}</a></h3>
+                                            <p class="mb-0">{{$item->category->name}}</p>
+                                            <p class="text-primary font-weight-bold">{{$item->price}} ₺</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="block-4 text-center">
-                                <figure class="block-4-image">
-                                    <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="#">Corater</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="block-4 text-center">
-                                <figure class="block-4-image">
-                                    <img src="images/cloth_2.jpg" alt="Image placeholder" class="img-fluid">
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="#">Polo Shirt</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="block-4 text-center">
-                                <figure class="block-4-image">
-                                    <img src="images/cloth_3.jpg" alt="Image placeholder" class="img-fluid">
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="#">T-Shirt Mockup</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="block-4 text-center">
-                                <figure class="block-4-image">
-                                    <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="#">Corater</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
