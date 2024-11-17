@@ -173,18 +173,17 @@
         <div class="container">
             <div class="row justify-content-center  mb-5">
                 <div class="col-md-7 site-section-heading text-center pt-4">
-                    <h2>Büyük İndirim!</h2>
+                    <h2>Kampanya!</h2>
                 </div>
             </div>
             <div class="row align-items-center">
                 <div class="col-md-12 col-lg-7 mb-5">
-                    <a href="#"><img src="images/blog_1.jpg" alt="Image placeholder"
-                            class="img-fluid rounded"></a>
+                    <a href="#"><img src="{{$settings['kampanya_image'] ?? ''}}" alt="Image placeholder" class="img-fluid rounded"></a>
                 </div>
                 <div class="col-md-12 col-lg-5 text-center pl-md-5">
-                    <h2>Tüm ürünlerimizde 50% indirim</h2>
-                    <p>Seçili ürünlerdeki indirim fırsatlarını kaçırmayın</p>
-                    <p><a href="{{ route('sale_products') }}" class="btn btn-primary btn-sm">İndirimdeki Ürünler</a></p>
+                    <h4>{{$settings['kampanya_title'] ?? ''}}</h4>
+                    <p>{{$settings['kampanya_text'] ?? ''}}</p>
+                    <p><a href="{{route('home')}}" class="btn btn-primary btn-sm">İndirideki Ürünler</a></p>
                 </div>
             </div>
         </div>

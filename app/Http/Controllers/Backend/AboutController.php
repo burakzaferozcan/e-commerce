@@ -22,11 +22,11 @@ class AboutController extends Controller
             $imageUrl =resimyukle($image,$fileName,$uplaodFolder);
         }
 
-
+        $about=About::where("id",$id)->first();
         About::updateOrCreate(
             ['id'=>$id],
             [
-                "image"=>$imageUrl??NULL,
+                "image"=>$imageUrl??$about->image,
                 'name'=>$request->name,
                 'content'=>$request->input("content"),
                 'text_1_icon'=>$request->text_1_icon,
