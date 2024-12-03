@@ -131,8 +131,12 @@
 @section('customjs')
     <script>
         $(document).on('click', '.paymentButton', function(e) {
-        });
+            var url = "{{route('cart.form')}}";
+            @if(!empty(session()->get('cart')))
+                window.location.href = url;
+            @endif
 
+        });
 
         $(document).on('click', '.decreaseBtn', function(e) {
             $('.orderItem').removeClass('selected');

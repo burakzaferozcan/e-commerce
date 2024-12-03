@@ -122,4 +122,29 @@ class CartController extends Controller
         return back()->withSuccess('Kupon Uygulandı!');
     }
 
+    public function sepetform() {
+
+        $cartItem = $this->cartform();
+        $seolists = metaolustur('sepet');
+
+        $seo = [
+            'title' =>  $seolists['title'] ?? '',
+            'description' => $seolists['description'] ?? '',
+            'keywords' => $seolists['keywords'] ?? '',
+            'image' => asset('img/page-bg.jpg'),
+            'url'=>  $seolists['currenturl'],
+            'canonical'=> $seolists['trpage'],
+            'robots' => 'noindex, follow',
+        ];
+
+        $breadcrumb = [
+            'sayfalar' => [
+
+            ],
+            'active'=> 'Sepet'
+        ];
+
+        return view('frontend.pages.cartform',compact('breadcrumb','seo','cartItem'));
+    }
+
 }
