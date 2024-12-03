@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </div>
-            <form action="{{route('sepet.cartSave')}}" method="POST">
+            <form action="{{route('cart.cartSave')}}" method="POST">
                 @csrf
 
                 <div class="row">

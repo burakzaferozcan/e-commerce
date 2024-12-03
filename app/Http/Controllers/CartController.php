@@ -147,4 +147,8 @@ class CartController extends Controller
         return view('frontend.pages.cartform',compact('breadcrumb','seo','cartItem'));
     }
 
+    public function cartsave(Request $request){
+        return $request->all();
+    }
+
 }
