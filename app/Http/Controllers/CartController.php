@@ -151,6 +151,19 @@ class CartController extends Controller
         return view('frontend.pages.cartform',compact('breadcrumb','seo','cartItem'));
     }
 
+    function generateKod() {
+        $siparisno = generateOTP(7);
+        if ($this->barcodeKodExists($siparisno)) {
+            return $this->generateKod();
+        }
+
+        return $siparisno;
+    }
+
+    function barcodeKodExists($siparisno) {
+        return Invoice::where('order_no',$siparisno)->exists();
+    }
+
     public function cartsave(Request $request){
 
         $request->validate([
