@@ -164,8 +164,7 @@ class CartController extends Controller
         return Invoice::where('order_no',$siparisno)->exists();
     }
 
-    public function cartsave(Request $request){
-
+    public function cartSave(Request $request) {
         $request->validate([
             'name' => 'required|string|min:3',
             'email' => 'required|email',
@@ -199,10 +198,9 @@ class CartController extends Controller
             'note.string' => __('Not bir metin olmalıdır.'),
         ]);
 
-
         $invoce = Invoice::create([
             "user_id"=> auth()->user()->id ?? null,
-            "order_no"=> $this->order_no,
+            "order_no"=> $this->generateKod(),
             "country"=> $request->country,
             "name"=> $request->name,
             "company_name"=> $request->company_name ?? null,
@@ -223,8 +221,12 @@ class CartController extends Controller
                 'name'=>$item['name'],
                 'price'=>$item['price'],
                 'qty'=>$item['qty'],
+                'kdv'=>$item['kdv']
             ]);
         }
+
+        session()->forget('cart');
+        return redirect()->route('home')->withSuccess('Alışveriş Başarıyla Tamamlandı.');
     }
 
 }
