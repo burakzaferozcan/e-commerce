@@ -50,6 +50,7 @@ class CartController extends Controller
                 "name"=>$urun->name,
                 "price"=>$urun->price,
                 "qty"=>$urun->qty,
+                "kdv"=>$urun->kdv,
                 "size"=>$urun->size,
                 ];
         }
@@ -75,14 +76,33 @@ class CartController extends Controller
 
         if(array_key_exists($productID,$cartItem)){
             $cartItem[$productID]["qty"]+=$qty;
-
+            if($qty == 0 || $qty < 0){
+                unset($cartItem[$productID]);
+            }
+            $itemtotal =  $urun->price * $qty;
         }
-        $itemtotal =  $urun->price * $qty;
 
         session(['cart'=>$cartItem]);
 
+        $cartItem=session()->get("cart");
+
+        $totalPrice=0;
+        foreach ($cartItem as $cart){
+            $totalPrice+=$cart["price"]*$cart["qty"];
+        }
+
+        if (session()->get('coupon_code') && $totalPrice != 0) {
+            $kupon = Coupon::where('name',session()->get('coupon_code'))->where('status','1')->first();
+            $kuponprice = $kupon->price ?? 0;
+            $newtotalPrice = $totalPrice - $kuponprice;
+        }else {
+            $newtotalPrice = $totalPrice;
+        }
+
+        session()->put("total_price",$newtotalPrice);
+
         if($request->ajax()) {
-            return response()->json(['itemTotal'=>$itemtotal, 'message'=>'Sepet Güncellendi']);
+            return response()->json(['itemTotal'=>$itemtotal,"totalPrice"=>session()->get("total_price"), 'message'=>'Sepet Güncellendi']);
         }
     }
 

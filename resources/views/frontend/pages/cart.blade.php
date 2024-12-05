@@ -62,6 +62,14 @@
                                         </div>
 
                                     </td>
+                                    @php
+                                        $kdvOrani = $cart['kdv'] ?? 0;
+                                        $fiyat = $cart['price'];
+                                        $adet = $cart['qty'];
+
+                                        $kdvtutar = ($fiyat * $adet) * ($kdvOrani / 100);
+                                        $toplamTutar = $fiyat * $adet + $kdvtutar;
+                                    @endphp
                                     <td class="itemTotal">{{$cart["price"]*$cart["qty"]}}TL</td>
                                     <td>
                                         <form action="{{route("cart.remove")}}" method="POST">
@@ -109,7 +117,7 @@
                                     <span class="text-black">Total</span>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <strong class="text-black">{{session()->get('total_price') ?? ''}}</strong>
+                                    <strong class="text-black newTotalPrice">{{session()->get('total_price') ?? ''}}</strong>
                                 </div>
                             </div>
 
@@ -149,6 +157,7 @@
             $(this).closest('.orderItem').addClass('selected');
             sepetUpdate();
         });
+
 
         function sepetUpdate() {
             var product_id  = $('.selected').closest('.orderItem').attr('data-id');
