@@ -33,8 +33,15 @@ Route::group(["middleware" => ["panelsetting","auth"],"prefix"=>"panel","as"=>"p
     Route::put('/setting/{id}/update', [\App\Http\Controllers\Backend\SettingController::class,'update'])->name('setting.update');
     Route::delete('/setting/destroy', [\App\Http\Controllers\Backend\SettingController::class,'destroy'])->name('setting.destroy');
 
-    Route::resource('/product', ProductController::class)->except('destroy');
-    Route::delete('/product/destroy', [ProductController::class,'destroy'])->name('product.destroy');
-    Route::post('/product-durum/update', [ProductController::class,'status'])->name('product.status');
+
+    Route::get('/order', [OrderController::class,'index'])->name('order.index');
+    Route::get('/order/{id}/edit', [OrderController::class,'edit'])->name('order.edit');
+    Route::put('/order/{id}/update', [OrderController::class,'update'])->name('order.update');
+    Route::delete('/order/destroy', [OrderController::class,'destroy'])->name('order.destroy');
+    Route::post('/order-durum/update', [OrderController::class,'status'])->name('order.status');
+
+    Route::resource('/product', \App\Http\Controllers\Backend\ProductController::class)->except('destroy');
+    Route::delete('/product/destroy', [\App\Http\Controllers\Backend\ProductController::class,'destroy'])->name('product.destroy');
+    Route::post('/product-durum/update', [\App\Http\Controllers\Backend\ProductController::class,'status'])->name('product.status');
 });
 
