@@ -12,21 +12,7 @@ class CartController extends Controller
 {
     public function index()
     {
-        $cartItem=session("cart",[]);
-        $totalPrice=0;
-        foreach ($cartItem as $cart){
-            $totalPrice+=$cart['price'] * $cart["qty"];
-        }
-        if(session()->get("coupon_code")){
-            $kupon=Coupon::where("name",session()->get("coupon_code"))->where("status","1")->first();
-            $kuponprice=$kupon->price??0;
-            $kuponname=$kupon->name??"";
-            $newtotalPrice=$totalPrice-$kuponprice;
-        }else{
-            $newtotalPrice=$totalPrice;
-
-        }
-        session()->put('total_price',$newtotalPrice);
+        $cartItem = $this->sepetList();
         return view("frontend.pages.cart",compact("cartItem"));
     }
     public function add(Request $request){
@@ -84,22 +70,7 @@ class CartController extends Controller
 
         session(['cart'=>$cartItem]);
 
-        $cartItem=session()->get("cart");
-
-        $totalPrice=0;
-        foreach ($cartItem as $cart){
-            $totalPrice+=$cart["price"]*$cart["qty"];
-        }
-
-        if (session()->get('coupon_code') && $totalPrice != 0) {
-            $kupon = Coupon::where('name',session()->get('coupon_code'))->where('status','1')->first();
-            $kuponprice = $kupon->price ?? 0;
-            $newtotalPrice = $totalPrice - $kuponprice;
-        }else {
-            $newtotalPrice = $totalPrice;
-        }
-
-        session()->put("total_price",$newtotalPrice);
+        $this->sepetList();
 
         if($request->ajax()) {
             return response()->json(['itemTotal'=>$itemtotal,"totalPrice"=>session()->get("total_price"), 'message'=>'Sepet Güncellendi']);
@@ -114,61 +85,68 @@ class CartController extends Controller
             unset($cartItem[$productID]);
         }
         session(["cart"=>$cartItem]);
+
+        if(count(session()->get('cart')) == 0) {
+            session()->forget('coupon_code');
+        }
+
         return back()->withSuccess("Ürün Başarıyla Sepetten Kaldırıldı.");
     }
 
     public function couponcheck(Request $request) {
-
-        $cartItem=session("cart",[]);
-        $totalPrice=0;
-
-        foreach ($cartItem as $cart){
-            $totalPrice+=$cart["price"]*$cart["qty"];
-        }
 
         $kupon = Coupon::where('name',$request->coupon_name)->where('status','1')->first();
 
         if(empty($kupon)) {
             return back()->withError('Kupon Bulunamadı!');
         }
-
-        $kuponprice=$kupon->price??0;
         $kuponcode = $kupon->name ?? '';
 
-
-        $newtotalPrice = $totalPrice-$kuponprice;
-
-        session()->put('total_price',$newtotalPrice);
         session()->put('coupon_code',$kuponcode);
+
+        $kuponprice=$kupon->price??0;
         session()->put('coupon_price',$kuponprice);
 
+        $this->sepetList();
 
         return back()->withSuccess('Kupon Uygulandı!');
     }
 
+    public function sepetList() {
+        $cartItem = session()->get('cart') ?? [];
+        $totalPrice = 0;
+        foreach ($cartItem as $cart) {
+            $kdvOrani = $cart['kdv'] ?? 0;
+            $kdvtutar = ($cart['price'] * $cart['qty']) * ($kdvOrani / 100);
+            $toplamTutar = $cart['price'] * $cart['qty'] + $kdvtutar;
+            $totalPrice +=  $toplamTutar;
+        }
+        if (session()->get('coupon_code') && $totalPrice != 0) {
+            $kupon = Coupon::where('name',session()->get('coupon_code'))->where('status','1')->first();
+            $kuponprice = $kupon->price ?? 0;
+            $newtotalPrice = $totalPrice - $kuponprice;
+        }else {
+            $newtotalPrice = $totalPrice;
+        }
+
+        session()->put('total_price',$newtotalPrice);
+
+        if(count(session()->get('cart')) == 0) {
+            session()->forget('coupon_code');
+        }
+
+        if(count(session()->get('cart')) == 0) {
+            session()->forget('coupon_code');
+        }
+
+        return  $cartItem;
+    }
+
+
     public function sepetform() {
+        $cartItem = $this->sepetList();
 
-        $cartItem = $this->cartform();
-        $seolists = metaolustur('sepet');
-
-        $seo = [
-            'title' =>  $seolists['title'] ?? '',
-            'description' => $seolists['description'] ?? '',
-            'keywords' => $seolists['keywords'] ?? '',
-            'image' => asset('img/page-bg.jpg'),
-            'url'=>  $seolists['currenturl'],
-            'canonical'=> $seolists['trpage'],
-            'robots' => 'noindex, follow',
-        ];
-
-        $breadcrumb = [
-            'sayfalar' => [
-
-            ],
-            'active'=> 'Sepet'
-        ];
-
-        return view('frontend.pages.cartform',compact('breadcrumb','seo','cartItem'));
+        return view('frontend.pages.cartform',compact('cartItem'));
     }
 
     function generateKod() {
