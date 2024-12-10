@@ -17,7 +17,7 @@
                     @php
                         $sifrele =  sifrele($product->id);
                     @endphp
-                    <form action="{{route("cart.add")}}" method="POST">
+                    <form id="addForm" method="POST">
                         @csrf
                         <input type="hidden" name="product_id" value="{{$sifrele}}">
                         <input type="hidden" name="size" value="{{$product->size}}">
