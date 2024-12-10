@@ -14,9 +14,12 @@
                     <p class="mb-0">{{ $product->short_text }}</p>
                     <p class="text-primary font-weight-bold">{{ number_format($product->price, 0) }}
                     </p>
+                    @php
+                        $sifrele =  sifrele($product->id);
+                    @endphp
                     <form action="{{route("cart.add")}}" method="POST">
                         @csrf
-                        <input type="hidden" name="product_id" value="{{$product->id}}">
+                        <input type="hidden" name="product_id" value="{{$sifrele}}">
                         <input type="hidden" name="size" value="{{$product->size}}">
                         <button type="submit" class="buy-now btn btn-sm btn-primary">Sepete Ekle</button>
                     </form>

@@ -16,7 +16,7 @@ class CartController extends Controller
         return view("frontend.pages.cart",compact("cartItem"));
     }
     public function add(Request $request){
-        $productID=$request->product_id;
+        $productID=sifrelecoz($request->product_id);
         $qty=$request->qty??1;
         $size=$request->size;
         $urun =Product::find($productID);
