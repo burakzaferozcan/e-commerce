@@ -72,10 +72,13 @@
                                     @endphp
                                     <td class="itemTotal">{{$cart["price"]*$cart["qty"]}}TL</td>
                                     <td>
-                                        <form action="{{route("cart.remove")}}" method="POST">
+                                        <form class="removeItem" method="POST">
                                             @csrf
-                                            <input type="text" hidden name="product_id" value="{{$key}}">
-                                        <button type="submit" class="btn btn-primary btn-sm">X</button>
+                                            @php
+                                                $sifrele =  sifrele($key);
+                                            @endphp
+                                            <input type="hidden" name="product_id" value="{{$sifrele}}">
+                                            <button type="submit" class="btn btn-primary btn-sm">X</button>
                                         </form>
                                     </td>
                                 </tr>

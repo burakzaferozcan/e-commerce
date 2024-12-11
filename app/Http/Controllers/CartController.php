@@ -79,7 +79,7 @@ class CartController extends Controller
 
 
     public function remove(Request $request){
-        $productID=$request->product_id;
+        $productID= sifrelecoz($request->product_id);
         $cartItem=session("cart",[]);
         if(array_key_exists($productID,$cartItem)){
             unset($cartItem[$productID]);
@@ -89,7 +89,9 @@ class CartController extends Controller
         if(count(session()->get('cart')) == 0) {
             session()->forget('coupon_code');
         }
-
+        if($request->ajax()) {
+            return response()->json(['sepetCount'=>count(session()->get('cart')), 'message'=>'Ürün Sepetten Kaldırıldı!']);
+        }
         return back()->withSuccess("Ürün Başarıyla Sepetten Kaldırıldı.");
     }
 
