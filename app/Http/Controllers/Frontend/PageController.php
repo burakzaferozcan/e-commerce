@@ -13,11 +13,22 @@ class PageController extends Controller
     public function about()
     {
         $about = About::where("id", 1)->first();
-        return view("frontend.pages.about", compact("about"));
+        $breadcrumb = [
+            'sayfalar' => [
+            ],
+            'active'=> 'Hakkımızda'
+        ];
+
+        return view('frontend.pages.about',compact('breadcrumb','about'));
     }
     public function contact()
     {
-        return view("frontend.pages.contact");
+        $breadcrumb = [
+            'sayfalar' => [
+            ],
+            'active'=> 'İletişim'
+        ];
+        return view('frontend.pages.contact',compact('breadcrumb'));
     }
     public function products(Request $request, $slug = null)
     {
@@ -29,7 +40,37 @@ class PageController extends Controller
         $order = $request->order ?? "id";
         $sort = $request->sort ?? "desc";
 
+        $anakategori = null;
+        $altkategori = null;
+        if(!empty($category) && empty($slug)) {
+            $anakategori = Category::where('slug',$category)->first();
+            $categorySlug = $anakategori->slug ?? '';
+        }else if (!empty($category) && !empty($slug)){
+            $anakategori = Category::where('slug',$category)->first();
+            $altkategori = Category::where('slug',$slug)->first();
+            $categorySlug = $altkategori->slug ?? '';
+        }
 
+
+        $breadcrumb = [
+            'sayfalar' => [
+
+            ],
+            'active'=> 'Ürünler'
+        ];
+
+        if(!empty($anakategori) && empty($altkategori)) {
+            $breadcrumb['active'] = $anakategori->name;
+        }
+
+        if(!empty($altkategori)) {
+            $breadcrumb['sayfalar'][] = [
+                'link'=> route($anakategori->slug.'_products'),
+                'name' => $anakategori->name
+            ];
+
+            $breadcrumb['active'] = $altkategori->name;
+        }
 
         $products = Product::where("status", "1")
             ->select(["id", "name", "slug", "size", "color", "price", "category_id", "image"])
@@ -63,11 +104,16 @@ class PageController extends Controller
 
         $maxprice=Product::max("price");
 
-        return view("frontend.pages.products", compact((["products", "maxprice", "sizeList", "colors"])));
+        return view("frontend.pages.products", compact((["breadcrumb","products", "maxprice", "sizeList", "colors"])));
     }
     public function sale_products()
     {
-        return view("frontend.pages.products");
+        $breadcrumb = [
+            'sayfalar' => [
+            ],
+            'active'=> 'İndirimli Ürünler'
+        ];
+        return view('frontend.pages.products',compact('breadcrumb'));
     }
     public function product_detail($slug)
     {
@@ -76,7 +122,23 @@ class PageController extends Controller
             ->where("status", "1")
             ->where("category_id", $product->category_id)
             ->limit(6)->get();
-        return view("frontend.pages.product", compact(["product", "products"]));
+
+        $category = Category::where('id',$product->category_id)->first();
+
+        $breadcrumb = [
+            'sayfalar' => [
+            ],
+            'active'=>  $product->name
+        ];
+
+        if(!empty($category)) {
+            $breadcrumb['sayfalar'][] = [
+                'link'=> route($category->slug.'urunler'),
+                'name' => $category->name
+            ];
+        }
+
+        return view('frontend.pages.product',compact('breadcrumb','product','products'));
     }
 
 }
