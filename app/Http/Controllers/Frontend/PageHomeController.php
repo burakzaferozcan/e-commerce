@@ -22,6 +22,17 @@ class PageHomeController extends Controller
             ->limit(10)
             ->get();
 
-        return view('frontend.pages.index',compact('slider','title','about','lastproducts'));
-    }
+        $seolists = metaolustur('anasayfa');
+
+        $seo = [
+            'title' =>  $seolists['title'] ?? '',
+            'description' => $seolists['description'] ?? '',
+            'keywords' => $seolists['keywords'] ?? '',
+            'image' => asset('img/page-bg.jpg'),
+            'url'=>  $seolists['currenturl'],
+            'canonical'=> $seolists['trpage'],
+            'robots' => 'index, follow',
+        ];
+
+        return view('frontend.pages.index',compact('seo','slider','title','about','lastproducts'));}
 }

@@ -19,7 +19,19 @@ class PageController extends Controller
             'active'=> 'Hakkımızda'
         ];
 
-        return view('frontend.pages.about',compact('breadcrumb','about'));
+        $seolists = metaolustur('hakkimizda');
+
+        $seo = [
+            'title' =>  $seolists['title'] ?? '',
+            'description' => $seolists['description'] ?? '',
+            'keywords' => $seolists['keywords'] ?? '',
+            'image' => asset('img/page-bg.jpg'),
+            'url'=>  $seolists['currenturl'],
+            'canonical'=> $seolists['trpage'],
+            'robots' => 'index, follow',
+        ];
+
+        return view('frontend.pages.about',compact("seo",'breadcrumb','about'));
     }
     public function contact()
     {
@@ -28,7 +40,19 @@ class PageController extends Controller
             ],
             'active'=> 'İletişim'
         ];
-        return view('frontend.pages.contact',compact('breadcrumb'));
+
+        $seolists = metaolustur('iletisim');
+
+        $seo = [
+            'title' =>  $seolists['title'] ?? '',
+            'description' => $seolists['description'] ?? '',
+            'keywords' => $seolists['keywords'] ?? '',
+            'image' => asset('img/page-bg.jpg'),
+            'url'=>  $seolists['currenturl'],
+            'canonical'=> $seolists['trpage'],
+            'robots' => 'index, follow',
+        ];
+        return view('frontend.pages.contact',compact("seo",'breadcrumb'));
     }
     public function products(Request $request, $slug = null)
     {
@@ -104,7 +128,19 @@ class PageController extends Controller
 
         $maxprice=Product::max("price");
 
-        return view("frontend.pages.products", compact((["breadcrumb","products", "maxprice", "sizeList", "colors"])));
+        $seolists = metaolustur($category);
+
+        $seo = [
+            'title' =>  $seolists['title'] ?? '',
+            'description' => $seolists['description'] ?? '',
+            'keywords' => $seolists['keywords'] ?? '',
+            'image' => asset('img/page-bg.jpg'),
+            'url'=>  $seolists['currenturl'],
+            'canonical'=> $seolists['trpage'],
+            'robots' => 'index, follow',
+        ];
+
+        return view("frontend.pages.products", compact((["seo","breadcrumb","products", "maxprice", "sizeList", "colors"])));
     }
     public function sale_products()
     {
@@ -138,7 +174,25 @@ class PageController extends Controller
             ];
         }
 
-        return view('frontend.pages.product',compact('breadcrumb','product','products'));
+        $title =  $product->title ?? $product->name. '-'. $product->category->name. '-'. config('app.name');
+
+
+        $description = 'Bu güzel '.$product->name.' ürünü '.$product->category->name.' kategorisinden bitmeden '.config('app.name'). ' hemen alın.';
+        $seodesciption = $product->description ?? $description;
+
+
+        $seo = [
+            'title' =>   $title ?? '',
+            'description' =>   $description ?? '',
+            'keywords' => $product->keywords ?? '',
+            'image' => asset($product->image),
+            'url'=>  route('product_detail',$product->slug),
+            'canonical'=> route('product_detail',$product->slug),
+            'robots' => 'index, follow',
+        ];
+
+
+        return view('frontend.pages.product',compact("seo",'breadcrumb','product','products'));
     }
 
 }

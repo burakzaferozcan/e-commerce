@@ -10,18 +10,21 @@ class Product extends Model
 {
     use Sluggable, HasFactory;
     protected $fillable = [
-        "name",
-        "slug",
-        "image",
-        "category_id",
-        "short_text",
-        "price",
-        "size",
-        "color",
-        "qty",
-        "kdv",
-        "status",
-        "content",
+        'name',
+        'slug',
+        'image',
+        'category_id',
+        'short_text',
+        'price',
+        'size',
+        'color',
+        'qty',
+        'kdv',
+        'status',
+        'content',
+        'title',
+        'description',
+        'keywords',
     ];
     public function category()
     {
@@ -34,5 +37,10 @@ class Product extends Model
                 'source' => 'name'
             ]
         ];
+    }
+
+    public function images()
+    {
+        return $this->hasOne(ImageMedia::class,'table_id','id')->where('model_name','Product');
     }
 }

@@ -50,4 +50,8 @@ class Category extends Model
             ]
         ];
     }
+    public function images()
+    {
+        return $this->hasOne(ImageMedia::class,'table_id','id')->where('model_name','Category');
+    }
 }
